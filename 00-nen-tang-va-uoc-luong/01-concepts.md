@@ -10,7 +10,7 @@
 1. [Vertical vs Horizontal Scaling & Stateless vs Stateful](#1-vertical-vs-horizontal-scaling--stateless-vs-stateful)
 2. [Load Balancer (L4/L7), Reverse Proxy & CDN](#2-load-balancer-l4l7-reverse-proxy--cdn)
 3. [Latency, Throughput, Percentile (p50/p99), SLA/SLO & "Số 9"](#3-latency-throughput-percentile-p50p99-slaslo--số-9)
-4. [CAP & PACELC (Mức khái niệm)](#4-cap--pacelc-mức-khái-niệm)
+4. [CAP & PACELC (Mức khái niệm)](#4-cap--pacelc-mức-khái niệm)
 5. [Ước lượng nhanh (Back-of-the-Envelope Estimation)](#5-ước-lượng-nhanh-back-of-the-envelope-estimation)
 6. [Framework 4 bước trong System Design](#6-framework-4-bước-trong-system-design)
 
@@ -30,10 +30,7 @@ Khi mới ra mắt (ví dụ **TechStore** phục vụ vài trăm khách/ngày),
 
 Để nâng công suất chịu tải, kỹ sư hệ thống có hai chiến lược mở rộng cốt lõi: **Vertical Scaling (Scale Up)** và **Horizontal Scaling (Scale Out)**.
 
----
-
 #### A. Vertical Scaling (Scale Up — Mở rộng theo chiều dọc)
-
 **Vertical Scaling** là cách **nâng cấp sức mạnh phần cứng cho chính 1 máy chủ duy nhất** (thay máy nhỏ bằng máy to hơn): tăng số nhân CPU (`2 → 16 → 64 vCPU`), tăng dung lượng RAM (`4 GB → 64 GB → 256 GB`), nâng ổ đĩa lên SSD NVMe nhanh hơn hoặc tăng băng thông card mạng.
 
 **Ưu điểm (Vì sao giai đoạn đầu cực kỳ hiệu quả?):**
@@ -47,10 +44,7 @@ Khi mới ra mắt (ví dụ **TechStore** phục vụ vài trăm khách/ngày),
 3. **Single Point of Failure (SPOF):** Toàn bộ hệ thống phụ thuộc vào một máy duy nhất. Chỉ cần hỏng nguồn, lỗi ổ cứng hay treo kernel là **100% dịch vụ sập hoàn toàn**.
 4. **Khó tránh Downtime khi nâng cấp:** Nhiều thao tác nâng phần cứng hoặc khởi động lại máy yêu cầu tắt server tạm thời, không đáp ứng được SLA `99.99%`.
 
----
-
 #### B. Horizontal Scaling (Scale Out — Mở rộng theo chiều ngang)
-
 **Horizontal Scaling** là cách **thêm nhiều máy chủ (hoặc container/pod) kích thước vừa phải chạy song song** thành một cụm (ví dụ từ `1` instance Spring Boot lên `4` hoặc `20` instances giống nhau). Phía trước cụm đặt một **Load Balancer** (như Nginx, HAProxy, AWS ALB) để tiếp nhận toàn bộ traffic và điều phối đều cho các máy bên dưới.
 
 **Ưu điểm vượt trội ở quy mô lớn:**
@@ -64,10 +58,7 @@ Khi mới ra mắt (ví dụ **TechStore** phục vụ vài trăm khách/ngày),
 2. **Phức tạp hơn về hạ tầng & vận hành:** Phải quản lý thêm Load Balancer (và chính Load Balancer cũng cần dự phòng cặp Active-Passive/Active-Active để không biến thành SPOF mới!), phải có hệ thống gom Log tập trung (ELK/Loki) và Monitoring tập trung (Prometheus/Grafana) thay vì SSH vào 1 máy xem log.
 3. **Nút thắt cổ chai chuyển sang tầng Database:** Nếu bạn scale Web App ra **50 instances**, cả 50 instances đó cùng mở kết nối tới **1 PostgreSQL duy nhất** → Database sẽ sập vì cạn connection pool hoặc nghẽn ghi đĩa! Lúc đó bạn buộc phải học tiếp Replication và Sharding ở **Giai đoạn 1**.
 
----
-
 #### C. Thực tế kết hợp cả hai như thế nào? (Hybrid Approach)
-
 Trong thiết kế hệ thống thực tế, kỹ sư **không chọn cực đoan chỉ dùng 1 cách** mà áp dụng linh hoạt theo từng tầng:
 - **Tầng Web / App Server (Stateless):** Ưu tiên **Scale Out (Horizontal)** — chạy tối thiểu 2–3 instances sau Load Balancer để vừa chịu tải cao, vừa tránh SPOF và deploy không downtime.
 - **Tầng Database (Stateful):** Ở giai đoạn đầu, **Scale Up (Vertical)** là lựa chọn thông minh và kinh tế nhất (giữ nguyên tính nhất quán ACID trên 1 node, không dính Replication Lag hay Cross-shard JOIN). Chỉ khi 1 máy DB rất mạnh vẫn quá tải đọc mới thêm **Read Replicas**, và khi quá tải ghi/dung lượng mới phải **Sharding**.
@@ -86,12 +77,37 @@ Trong thiết kế hệ thống thực tế, kỹ sư **không chọn cực đoa
 | **Deploy / Nâng cấp** | Thường có downtime khi nâng phần cứng / reboot | Rolling update không gián đoạn (zero-downtime) |
 | **Khi nào chọn?** | Giai đoạn đầu, traffic vừa phải, DB quan hệ chưa cần shard | Traffic lớn, cần HA, cần auto-scale theo giờ cao điểm |
 
+---
+
 ### 1.2. Stateless vs Stateful Architecture
 
-- **Stateful Server:** Lưu trạng thái phiên làm việc (ví dụ: `HttpSession` trong RAM, file upload tạm trên ổ đĩa local) ngay trên chính instance xử lý request.
-  - **Vấn đề khi scale ngang:** Nếu User A đăng nhập ở `Server 1`, request sau Load Balancer định tuyến sang `Server 2`, `Server 2` không biết User A là ai → lỗi mất phiên. Dùng *Sticky Sessions* (IP/Cookie affinity) làm phân tải lệch và mất phiên khi `Server 1` sập.
-- **Stateless Server:** Mọi request mang đủ ngữ cảnh (ví dụ JWT) hoặc server đọc/ghi state từ một **shared data store** bên ngoài (Redis cho session/cart, S3/MinIO cho file, PostgreSQL cho dữ liệu nghiệp vụ).
-  - **Lợi ích:** Có thể bật/tắt/restart bất kỳ instance Spring Boot nào sau Load Balancer mà user không bị rớt phiên; hỗ trợ auto-scaling mượt mà.
+Để thực hiện được **Horizontal Scaling (Scale Out)** cho tầng Web/App, điều kiện tiên quyết là biến tầng App thành **Stateless**. Vậy *"State"* là gì và nó gây rắc rối ra sao?
+
+#### "State" (Trạng thái) trong Web Application là gì?
+Là những thông tin được giữ lại giữa các HTTP request của cùng một người dùng:
+- **Session State:** Thông tin user đã đăng nhập (`userId`, `role`), giỏ hàng tạm, mã OTP vừa gửi.
+- **Local File State:** Ảnh sản phẩm hoặc file PDF người dùng upload lên, tạm thời ghi vào thư mục `/tmp/uploads` trên ổ cứng của máy chủ.
+- **In-memory Cache cục bộ:** Biến `HashMap` lưu giỏ hàng hoặc bộ đếm rate-limit trong RAM của tiến trình Java.
+
+#### Stateful Server & Thảm họa khi Scale Out
+Một server **Stateful** lưu các thông tin trên **ngay bên trong RAM hoặc ổ đĩa cục bộ** của chính instance đó.
+- **Kịch bản lỗi:** User A gửi request `POST /login` → Load Balancer đưa vào `App 1` → `App 1` lưu `Session_A` vào RAM của `App 1`. Một giây sau, User A bấm `GET /cart` → Load Balancer chia tải sang `App 2` → `App 2` tìm trong RAM không thấy `Session_A` → **User A bị đá ra màn hình đăng nhập!**
+- **Giải pháp chắp vá "Sticky Sessions" (Session Affinity):** Cấu hình Load Balancer luôn gắn `User A` vào đúng `App 1` dựa theo Cookie hoặc IP. Tuy nhiên cách này có **3 nhược điểm lớn**:
+  1. **Lệch tải (Load Skew):** Một user hoặc 1 văn phòng công ty dùng chung IP NAT bắn hàng nghìn request sẽ dồn hết vào `App 1`, trong khi `App 2, 3` nhàn rỗi.
+  2. **Mất dữ liệu khi restart/crash:** Nếu `App 1` sập hoặc bạn deploy bản code mới lên `App 1`, toàn bộ session/giỏ hàng trong RAM của `App 1` bốc hơi!
+  3. **Cản trở Auto-scaling:** Khó thu hồi instance khi có user đang dính sticky trên đó.
+
+#### Stateless Server — Cách làm chuẩn để Scale vô hạn
+Một server **Stateless** **không giữ bất kỳ trạng thái riêng nào theo từng user trong RAM/Disk cục bộ**. Mọi instance đều giống hệt nhau (`App 1 == App 2 == App N`) nên request tiếp theo rơi vào máy nào cũng xử lý được như nhau!
+
+**Có 2 cách lưu State khi App đã Stateless:**
+1. **Đẩy State ra Kho dữ liệu dùng chung (External Shared Store):**
+   - Session, giỏ hàng, OTP → lưu vào **Redis** (độ trễ đọc/ghi chỉ `~0.5–1ms`).
+   - File ảnh, video, tài liệu upload → lưu thẳng lên **Object Storage (AWS S3 / MinIO)**.
+   - Dữ liệu giao dịch lâu dài → lưu vào **PostgreSQL**.
+2. **Đẩy State về phía Client (Stateless Token — JWT):**
+   - Khi login, Server ký số một chuỗi **JWT (JSON Web Token)** chứa `{ userId, role, exp }` rồi trả cho Client. Các request sau Client tự đính kèm JWT vào Header `Authorization: Bearer ...` → Server nào cũng tự kiểm tra chữ ký và biết ngay user là ai mà không cần hỏi Redis!
+   - *Lưu ý trade-off của JWT:* Rất nhẹ và nhanh vì không cần DB lookup, nhưng **khó thu hồi (revoke) ngay lập tức** trước khi token hết hạn (ví dụ khi user bấm "Đăng xuất khỏi mọi thiết bị" hoặc bị khóa tài khoản → thực tế hay dùng JWT ngắn hạn `15 phút` + Refresh Token lưu trong Redis/DB!).
 
 ```mermaid
 flowchart LR
@@ -105,7 +121,7 @@ flowchart LR
         U2["User A"] --> LB2["Load Balancer"]
         LB2 --> A1["App 1"]
         LB2 --> A2["App 2"]
-        A1 --> R["Shared Store (Redis / DB)"]
+        A1 --> R["Shared Store (Redis / S3 / DB)"]
         A2 --> R
     end
 ```
@@ -114,72 +130,117 @@ flowchart LR
 
 ## 2. Load Balancer (L4/L7), Reverse Proxy & CDN
 
-### 2.1. Forward Proxy vs Reverse Proxy vs Load Balancer
+### 2.1. Phân biệt Forward Proxy vs Reverse Proxy vs Load Balancer
 
-- **Forward Proxy:** Đứng trước **Client**, đại diện cho client gọi ra Internet (ẩn IP client, lọc truy cập nội bộ, cache chung cho mạng công ty).
-- **Reverse Proxy:** Đứng trước **Server**, nhận request thay cho backend server (che giấu IP thật của server, SSL termination, nén gzip, cache tĩnh, rate limit).
-- **Load Balancer (LB):** Là một dạng reverse proxy chuyên phân phối traffic đều (hoặc thông minh) ra **nhiều backend server**, đồng thời thực hiện **health check** để tự loại bỏ node chết.
+Nhiều người mới hay nhầm lẫn 3 khái niệm này vì đều đứng "trung gian" trên đường truyền mạng. Cách nhớ đơn giản nhất là hỏi: **"Nó đứng về phe ai?"**
+
+```mermaid
+flowchart LR
+    C["Clients / Browsers"] --> FP["Forward Proxy (Đứng trước Client)"]
+    FP -- "Internet" --> RP["Reverse Proxy / Load Balancer (Đứng trước Servers)"]
+    RP --> B1["Backend 1"]
+    RP --> B2["Backend 2"]
+```
+
+1. **Forward Proxy (Đứng phía Client):**
+   - Đại diện cho **Client** đi gọi ra các server bên ngoài Internet. Server đích chỉ thấy IP của Proxy chứ không thấy IP thật của từng máy nhân viên/người dùng.
+   - *Ứng dụng:* Mạng công ty chặn web đen/mạng xã hội, tường lửa kiểm soát nhân viên truy cập ra ngoài, hoặc cache chung các file tải về để tiết kiệm băng thông đường truyền công ty.
+2. **Reverse Proxy (Đứng phía Server):**
+   - Đại diện cho **Server** đón toàn bộ request từ Internet đi vào. Client tưởng mình đang nói chuyện trực tiếp với server chính, không hề biết IP nội bộ thật của các backend phía sau.
+   - *5 công việc thực tế Reverse Proxy làm giúp Backend:*
+     - **SSL/TLS Termination:** Giải mã HTTPS ngay tại Reverse Proxy để giải phóng CPU cho các instance Spring Boot phía sau (bên trong mạng nội bộ giao tiếp HTTP thuần cho nhanh).
+     - **Che giấu kiến trúc nội bộ & Bảo mật:** Ngăn hacker quét thẳng port của database hay từng server riêng lẻ.
+     - **Nén dữ liệu (Gzip / Brotli):** Nén JSON/HTML trước khi gửi qua Internet giúp giảm 60–80% dung lượng băng thông.
+     - **Cache tài nguyên tĩnh nhẹ & Rate Limiting sơ bộ.**
+3. **Load Balancer (LB):**
+   - Thực chất là một **Reverse Proxy chuyên biệt** đứng trước **từ 2 backend server trở lên**, có nhiệm vụ: *(1) Phân chia lưu lượng hợp lý để không máy nào bị quá tải*, và *(2) Chạy **Health Check** để tự loại bỏ node chết*.
+   - **Lưu ý tránh SPOF:** Bản thân Load Balancer không được phép là điểm chết duy nhất! Trong production luôn chạy **cặp Load Balancer (Active–Passive dùng Keepalived/VRRP, hoặc Active–Active qua DNS/Anycast)**.
 
 ### 2.2. Load Balancer Layer 4 (L4) vs Layer 7 (L7)
 
+Theo mô hình mạng OSI 7 tầng, L4 hoạt động ở tầng **Transport (TCP/UDP)** còn L7 hoạt động ở tầng **Application (HTTP/HTTPS/gRPC/WebSocket)**.
+
 | Tiêu chí | L4 Load Balancer (Transport Layer) | L7 Load Balancer (Application Layer) |
 | :--- | :--- | :--- |
-| **Thông tin đọc được** | Chỉ IP nguồn/đích và Port TCP/UDP | Đọc toàn bộ HTTP header, URL path, cookie, body |
-| **Cơ chế hoạt động** | Chuyển tiếp gói tin (NAT / DSR), không giải mã TLS hoặc parse HTTP | Terminate TCP/TLS, đọc HTTP request rồi mở kết nối mới tới backend |
-| **Hiệu năng / Độ trễ** | Cực nhanh, tốn ít CPU/RAM, chịu tải triệu kết nối/s | Chậm hơn L4 một chút do parse HTTP & xử lý TLS |
-| **Tính linh hoạt** | Không route được theo `/api/orders` vs `/api/products` | Route theo path, host, header, A/B testing, Canary, WebSocket upgrade |
-| **Ví dụ phổ biến** | AWS NLB, IPVS, HAProxy (mode tcp), Nginx stream | Nginx HTTP, Envoy, AWS ALB, HAProxy (mode http) |
+| **Thông tin đọc được** | Chỉ thấy **IP nguồn, IP đích và Port TCP/UDP** (4-tuple) | Đọc được toàn bộ **HTTP Method, URL Path, Headers, Cookie, Body** |
+| **Cơ chế truyền gói tin** | Chuyển tiếp từng gói tin (**NAT** hoặc **DSR — Direct Server Return**); không cần giải mã TLS hay ghép lại thành HTTP message | **Terminate kết nối TCP & TLS** với Client, parse xong HTTP request mới mở kết nối riêng tới Backend |
+| **Hiệu năng & Độ trễ** | **Cực nhanh**, tiêu tốn rất ít CPU/RAM, chịu tải hàng triệu kết nối/giây | Chậm hơn L4 một chút do chi phí giải mã TLS & parse chuỗi HTTP |
+| **Khả năng định tuyến thông minh** | Không phân biệt được `/api/orders` với `/api/products` | Route theo URL (`/orders` → cụm Order, `/products` → cụm Product), A/B testing, Canary release theo Header/Cookie |
+| **Ví dụ phổ biến** | AWS NLB, Linux IPVS, HAProxy (`mode tcp`), Nginx `stream` | Nginx HTTP, Envoy, AWS ALB, Traefik, Spring Cloud Gateway |
 
-> **Thực tế kiến trúc lớn:** Thường dùng **L4 LB ở ngoài cùng** (chịu tải packet cực lớn + Anycast/ECMP) trỏ vào cụm **L7 LB / API Gateway** (Nginx/Envoy) bên trong để route thông minh.
+> **Kiến trúc chuẩn ở hệ thống lớn:** Kết hợp cả hai tầng! Đặt **L4 Load Balancer ở lớp ngoài cùng** (dùng kỹ thuật *Anycast / ECMP* để chịu hàng triệu packet/s mà không bị nghẽn), sau đó chuyển tiếp vào một **cụm nhiều L7 Load Balancer / API Gateway** (Nginx/Envoy) bên trong để định tuyến chi tiết tới từng Microservice.
 
-### 2.3. Các thuật toán Load Balancing phổ biến
-1. **Round Robin:** Chia lần lượt `1 → 2 → 3 → 1`. Tốt khi các server cấu hình giống nhau và request nặng tương đương.
-2. **Weighted Round Robin:** Máy mạnh nhận trọng số cao hơn (ví dụ tỷ lệ `2:1:1`).
-3. **Least Connections:** Gửi tới server đang có ít kết nối mở nhất — phù hợp khi thời gian xử lý mỗi request chênh lệch lớn.
-4. **IP Hash / Consistent Hashing:** Hash IP (hoặc header/key) để cùng 1 client/key thường xuyên vào 1 node (hữu ích cho cache local hoặc sticky routing).
+### 2.3. Các thuật toán Load Balancing & Health Checks
+
+1. **Round Robin (Xoay vòng):** Chia đều lần lượt `1 → 2 → 3 → 1`. *Hạn chế:* Giả định mọi server mạnh ngang nhau và mọi request tốn thời gian xử lý như nhau.
+2. **Weighted Round Robin:** Gán trọng số theo sức mạnh máy (vd máy 16 vCPU nhận `weight=4`, máy 4 vCPU nhận `weight=1`), hoặc dùng cho **Canary Release** (95% traffic vào bản cũ, 5% vào bản mới).
+3. **Least Connections (Ít kết nối nhất):** Gửi request mới tới server đang xử lý ít kết nối mở nhất. *Tại sao cần?* Nếu 1 API xuất báo cáo Excel tốn `10 giây` còn API xem sản phẩm tốn `10 ms`, Round Robin có thể vô tình dồn hết các request `10 giây` vào đúng 1 máy làm máy đó treo, trong khi Least Connections tự tránh máy đang bận!
+4. **Least Response Time:** Kết hợp cả số lượng kết nối đang mở lẫn thời gian phản hồi trung bình gần nhất — chọn server vừa rảnh vừa phản hồi nhanh nhất.
+5. **IP Hash / Consistent Hashing:** Tính `hash(Client_IP)` để cố định một user vào cùng 1 backend (hữu ích khi backend có local in-memory cache). *Bẫy cần biết:* Nếu 500 nhân viên trong 1 tòa nhà đi qua chung 1 IP NAT của công ty, cả 500 người sẽ bị dồn hết vào **cùng 1 backend server**!
+
+**Cơ chế Health Check (Phát hiện node chết):**
+- **Active Health Check:** Load Balancer chủ động gọi `GET /actuator/health` mỗi `5 giây`; nếu thất bại `3 lần` liên tiếp thì rút server khỏi danh sách chia tải.
+- **Passive Health Check:** Load Balancer theo dõi traffic thật đi qua (`max_fails=2 fail_timeout=10s` như trong Nginx ở Lab 0.2); nếu thấy request trả về lỗi kết nối hoặc `502/503`, tự động thử lại sang node khác (`proxy_next_upstream`) và tạm cách ly node lỗi.
 
 ### 2.4. CDN (Content Delivery Network)
-CDN là mạng lưới server phân tán toàn cầu (**Edge PoPs**) lưu bản sao nội dung gần người dùng về mặt địa lý (ảnh sản phẩm TechStore, JS/CSS bundle, video).
-- **Push CDN:** Chủ động đẩy file lên CDN khi có dữ liệu mới. Phù hợp site nhỏ, nội dung ít thay đổi, muốn kiểm soát chặt dung lượng lưu trên CDN.
-- **Pull CDN (phổ biến nhất):** Lần đầu user ở Tokyo gọi `cdn.techstore.vn/img/a.jpg` → Edge chưa có (**cache miss**) → Edge kéo từ Origin Server → lưu lại theo `Cache-Control: max-age=...` (**TTL**) → các user sau nhận trực tiếp từ Edge (**cache hit**).
-- **Lợi ích cốt lõi:** Giảm mạnh **latency** cho user ở xa origin, giảm tải băng thông & CPU cho origin server.
-- **Lưu ý vận hành:** Cần chiến lược **cache invalidation** (đổi tên file theo content hash `app.3f8a1.js` hoặc gọi Purge API) và đặt **TTL** hợp lý.
+
+#### Tại sao phải dùng CDN dù Server đã nhanh?
+Dù server Spring Boot đặt ở Singapore xử lý một ảnh mất chỉ `1 ms`, nhưng **tốc độ ánh sáng trong cáp quang là hữu hạn**. Một người dùng ở Mỹ hoặc Châu Âu tải 20 bức ảnh sản phẩm và file JS `3 MB` từ Singapore sẽ phải chịu độ trễ mạng (`RTT ~180–250 ms` nhân với số lần handshake TCP + TLS + tải dữ liệu) mất tới **3–5 giây**!
+
+**CDN** là mạng lưới hàng trăm máy chủ đặt khắp thế giới (**Edge Servers / Edge PoPs** — ví dụ Cloudflare, CloudFront, Akamai) lưu bản sao các tài nguyên gần người dùng nhất về mặt địa lý (kéo RTT từ `200ms` xuống chỉ còn `10–20ms`!).
+
+#### Push CDN vs Pull CDN
+
+| Tiêu chí | Push CDN | Pull CDN *(Phổ biến nhất)* |
+| :--- | :--- | :--- |
+| **Cách hoạt động** | Bạn tự upload sẵn file mới lên các Edge CDN mỗi khi có dữ liệu mới | User đầu tiên ở Tokyo gọi `cdn.techstore.vn/a.jpg` → Edge chưa có (**Cache Miss**) → Edge tự kéo từ Origin Server (S3/App) về lưu lại theo header `Cache-Control: max-age=86400` → từ user thứ 2 trở đi nhận thẳng từ Edge (**Cache Hit**) |
+| **Ưu điểm** | Luôn có sẵn bản mới ngay lượt truy cập đầu tiên; kiểm soát chặt thứ gì nằm trên CDN | Cực dễ tích hợp (chỉ trỏ domain qua CDN), chỉ lưu file thực sự có người xem |
+| **Nhược điểm** | Tốn công viết logic upload/xóa thủ công; dễ tốn tiền lưu trữ file ít người xem | User đầu tiên tại mỗi khu vực PoP chịu chậm 1 lần (*cache miss*) |
+| **Khi nào dùng?** | Site nhỏ, nội dung ít thay đổi, phát hành bản cài đặt/game lớn | Hầu hết web/e-commerce/streaming (TechStore, YouTube, Shopee) |
+
+#### Chiến lược Cache Invalidation (Làm mới file trên CDN)
+- **Đặt TTL (`Cache-Control: public, max-age=86400`):** File hết hạn sau 1 ngày mới hỏi lại Origin.
+- **Cache Purge / Invalidation API:** Bấm lệnh xóa file trên CDN ngay khi sửa (tốn thời gian vài giây đến vài phút lan tỏa khắp toàn cầu, đôi khi tính phí theo lượt purge).
+- **Content Hashing / Versioning (Cách tối ưu nhất):** Gắn mã băm nội dung vào tên file (ví dụ `main.8f3a1c.js`, `banner-v2.webp`) và đặt TTL **1 năm**. Khi sửa code/ảnh, tên file đổi thành `main.9b2e04.js` → trình duyệt và CDN tự động tải bản mới ngay lập tức mà không bao giờ cần Purge!
 
 ---
 
 ## 3. Latency, Throughput, Percentile (p50/p99), SLA/SLO & "Số 9"
 
-### 3.1. Latency vs Response Time vs Throughput
-- **Latency:** Thời gian một request phải chờ để bắt đầu được xử lý hoặc thời gian truyền/xử lý thuần túy của hệ thống (thường đo bằng ms).
-- **Response Time:** Tổng thời gian từ lúc client gửi request đến lúc nhận đủ response (gồm network round-trip + queue time + service processing time).
-- **Throughput:** Số lượng công việc xử lý được trên một đơn vị thời gian: **QPS** (*Queries Per Second*), **RPS** (*Requests Per Second*), hoặc **MB/s**.
+### 3.1. Latency vs Response Time vs Throughput & Điểm bão hòa
 
-> **Mối quan hệ quan trọng:** Khi tải (concurrency) tăng vượt ngưỡng bão hòa CPU/DB connection pool, **throughput chững lại hoặc tụt xuống**, còn **latency tăng vọt theo hàm mũ** (Little's Law & queueing effect).
+- **Latency (Độ trễ):** Thời gian một request phải chờ để được phục vụ hoặc thời gian xử lý thuần túy bên trong hệ thống (không tính đường truyền khứ hồi của client, tùy ngữ cảnh).
+- **Response Time (Thời gian phản hồi):** Tổng thời gian người dùng thực sự phải đợi từ lúc gửi request đến lúc nhận đủ byte cuối cùng:
+  $$\text{Response Time} = \text{Network RTT} + \text{Queueing Time} + \text{Service Processing Time}$$
+- **Throughput (Thông lượng):** Lượng công việc hệ thống hoàn thành trong 1 đơn vị thời gian: **QPS** (*Queries Per Second*), **RPS** (*Requests Per Second*), hoặc **MB/s**.
+
+**Mối quan hệ sống còn khi tăng tải (Little's Law & Điểm bão hòa):**
+- Khi số người dùng đồng thời (concurrency) còn thấp: tăng tải → **Throughput tăng đều** và **Latency giữ ổn định**.
+- Khi chạm ngưỡng bão hòa tài nguyên (CPU 100%, DB connection pool đầy 100/100, hoặc khóa dòng dữ liệu): request mới bị kẹt trong hàng đợi chờ (**Queueing Time tăng vọt**), CPU tốn nhiều thời gian đảo ngữ cảnh (**Context Switching**) → **Throughput chững lại hoặc tụt xuống**, còn **Latency dựng đứng theo đường cong chữ J (Hockey-stick curve)**!
 
 ### 3.2. Tại sao phải nhìn Percentile (`p50`, `p95`, `p99`) thay vì Trung bình (`avg`)?
 
-Độ trễ thực tế của hệ thống web **không tuân theo phân phối chuẩn** mà bị **lệch phải (right-skewed / long-tail)**.
-- **`p50` (Median):** 50% số request nhanh hơn hoặc bằng giá trị này (trải nghiệm "thông thường").
-- **`p95`:** 95% request nhanh hơn mốc này (5% chậm hơn).
-- **`p99`:** 99% request nhanh hơn mốc này — **1% chậm nhất** thường là những user mua nhiều hàng nhất (giỏ hàng to, lịch sử dài) hoặc dính GC pause / cold cache / lock contention!
+Độ trễ web **không phân bố đối xứng hình chuông** mà có **đuôi dài lệch phải (Right-skewed / Long-tail Distribution)**: đa số request rất nhanh, nhưng một tỷ lệ nhỏ cực kỳ chậm.
 
-**Ví dụ minh họa vì sao `avg` đánh lừa:**
-Giả sử có 100 request: 99 request mất **10 ms**, nhưng 1 request dính DB lock mất **2,010 ms**.
-- `avg` = `(99 × 10 + 2,010) / 100` = **30 ms** (trông có vẻ rất nhanh!).
-- `p99` = **2,010 ms** (cho thấy ngay 1% user đang chờ hơn 2 giây!).
+- **`p50` (Median):** 50% số request nhanh hơn giá trị này — đại diện cho trải nghiệm "thông thường".
+- **`p95`:** 95% số request nhanh hơn mốc này (5% chậm nhất nằm phía trên).
+- **`p99`:** 99% số request nhanh hơn mốc này — phản ánh trực diện nhóm **1% chậm nhất**.
 
-**Hiệu ứng khuếch đại Tail Latency (Tail at Scale):**
-Nếu một trang chủ TechStore gọi **song song 20 microservice/API con**, và mỗi API con có xác suất chậm (`> p99`) là 1%, thì xác suất trang chủ bị chậm là:
-$$P(\text{ít nhất 1 call chậm}) = 1 - 0.99^{20} \approx 18.2\%$$
-Tức là `p99` ở tầng con biến thành gần **`p82`** (cứ 5 lượt tải trang thì 1 lượt bị chậm) ở tầng người dùng!
+**3 lý do thực tế buộc phải đo theo `p99` (DDIA Ch.1):**
+1. **Trung bình (`avg`) che giấu thảm họa:** Giả sử 99 request mất **10 ms**, 1 request dính DB lock mất **2,010 ms** → `avg` = **30 ms** (nhìn báo cáo rất đẹp!), nhưng `p99` = **2,010 ms** (1% người dùng đang chờ hơn 2 giây!).
+2. **Những khách hàng giá trị nhất hay rơi vào `p99`:** Khách VIP mua nhiều nhất ở TechStore có giỏ hàng nặng nhất, lịch sử đơn hàng dài nhất, nên các câu query của họ chính là những câu chậm nhất nằm ở `p99`!
+3. **Hiệu ứng khuếch đại Tail Latency (*Tail at Scale*):** Một trang chi tiết sản phẩm thường gọi **song song 20 API/microservice con** (giá, tồn kho, khuyến mãi, đánh giá, gợi ý...). Trang web chỉ render xong khi **API chậm nhất** trong 20 lời gọi trả về! Nếu mỗi API con có `1%` xác suất chậm (`> p99`), thì xác suất người dùng bị dính chậm khi mở trang là:
+   $$P(\text{ít nhất 1 call chậm}) = 1 - 0.99^{20} \approx \mathbf{18.2\%}$$
+   *(Gần 1/5 lượt tải trang bị chậm — `p99` của từng service con bị khuếch đại thành `~p82` ở đầu người dùng! Để giảm hiệu ứng này, các hệ lớn dùng **Hedged Requests**: quá `p95` ms chưa thấy hồi âm thì gửi thêm bản sao sang replica khác).*
 
-### 3.3. SLI, SLO, SLA và Availability "Số 9"
+### 3.3. SLI, SLO, SLA, Error Budget & Bảng "Số 9"
 
-- **SLI (Service Level Indicator):** Chỉ số đo lường thực tế (ví dụ: `p99 latency = 180ms`, `success rate = 99.95%`).
-- **SLO (Service Level Objective):** Mục tiêu nội bộ đội kỹ thuật cam kết giữ (ví dụ: `99.9% request < 250ms trong 30 ngày`). Phần dư `100% - SLO` gọi là **Error Budget**.
-- **SLA (Service Level Agreement):** Hợp đồng pháp lý/thương mại với khách hàng (ví dụ: *nếu uptime < 99.9% sẽ hoàn tiền 10%*). **SLO luôn phải khắt khe hơn SLA** để có vùng đệm cảnh báo trước khi vi phạm hợp đồng.
+- **SLI (Service Level Indicator):** Chỉ số kỹ thuật đo được thực tế (ví dụ: *Tỷ lệ HTTP 2xx trong 30 ngày là `99.94%`*, *`p99` API `/products` là `180ms`*).
+- **SLO (Service Level Objective):** Ngưỡng mục tiêu **nội bộ** đội kỹ thuật tự cam kết (ví dụ: `uptime >= 99.9%` và `p99 < 250ms` mỗi tháng).
+  - **Error Budget (Ngân sách lỗi):** Phần dư `100% - SLO`. Với `SLO = 99.9%` trong 30 ngày, bạn có `43.8 phút` downtime cho phép. Nếu cả tháng mới mất `5 phút`, team còn dư `38.8 phút` Error Budget để mạnh dạn deploy tính năng mới; nếu đã cháy hết Error Budget → **tạm dừng ra tính năng mới**, tập trung vá lỗi & tăng độ ổn định!
+- **SLA (Service Level Agreement):** Hợp đồng **pháp lý / thương mại** ký với khách hàng (vi phạm phải đền tiền/hoàn cước). **SLO luôn phải đặt khắt khe hơn SLA** (ví dụ SLA `99.9%` thì SLO nội bộ đặt `99.95%`) để có vùng đệm cảnh báo trước khi vi phạm hợp đồng.
 
-**Bảng quy đổi Availability "Số 9" (chuẩn phỏng vấn):**
+**Bảng quy đổi Availability "Số 9" (thuộc lòng khi làm Bước 1 phỏng vấn):**
 
 | Availability | Downtime / Năm | Downtime / Tháng (30d) | Downtime / Ngày | Mức độ hệ thống |
 | :--- | :--- | :--- | :--- | :--- |
@@ -189,93 +250,117 @@ Tức là `p99` ở tầng con biến thành gần **`p82`** (cứ 5 lượt t�
 | **99.99% (4 số 9)** | 52.6 phút | 4.38 phút | 8.64 giây | Hệ thống thanh toán, nền tảng lớn |
 | **99.999% (5 số 9)** | 5.26 phút | 26.3 giây | 0.86 giây | Viễn thông, hạ tầng lõi ngân hàng |
 
-**Công thức ghép nối Availability:**
-- **Nối tiếp** (A phụ thuộc B): $A_{\text{total}} = A_A \times A_B$ (ví dụ `99.9% × 99.9% = 99.8%` → giảm đi!).
-- **Song song / Dự phòng** (2 node giống nhau): $A_{\text{total}} = 1 - (1 - A)^2$ (ví dụ `1 - 0.001² = 99.9999%`).
+**Công thức tính Availability tổng của hệ thống nhiều thành phần:**
+- **Phụ thuộc nối tiếp** (Web App **VÀ** Database cùng phải sống):
+  $$A_{\text{total}} = A_{\text{app}} \times A_{\text{db}}$$
+  *(Ví dụ: App `99.9%` nối với 1 DB `99.9%` → tổng chỉ còn `0.999 × 0.999 = 99.8%` — tụt mất một bậc!)*
+- **Dự phòng song song** (Chạy 2 instance App độc lập, chỉ cần 1 cái sống):
+  $$A_{\text{parallel}} = 1 - (1 - A)^2$$
+  *(Ví dụ: 2 máy `99.9%` chạy song song → xác suất cả 2 chết cùng lúc là `0.001 × 0.001 = 0.000001` → Availability vọt lên **`99.9999%`**!)*
 
 ---
 
 ## 4. CAP & PACELC (Mức khái niệm)
 
-### 4.1. Định lý CAP
-Trong một hệ thống dữ liệu phân tán có **chia tách mạng (Network Partition — P)**, hệ thống buộc phải đánh đổi giữa:
-- **C (Consistency — Linearizability):** Mọi thao tác đọc đều nhận được dữ liệu ghi mới nhất (hoặc lỗi), như thể chỉ có 1 bản sao dữ liệu duy nhất.
-- **A (Availability):** Mọi request gửi đến một node còn sống đều nhận được phản hồi thành công (không báo lỗi), dù dữ liệu có thể chưa cập nhật mới nhất.
-- **P (Partition Tolerance):** Hệ thống vẫn tiếp tục hoạt động dù các gói tin giữa các node bị rớt hoặc đứt mạng cục bộ.
+### 4.1. Định lý CAP (Phá vỡ hiểu lầm "Chọn 2 trong 3")
+Định lý CAP nói về **một hệ thống dữ liệu phân tán** (nhiều node lưu cùng dữ liệu qua mạng) khi xảy ra **chia tách mạng (Network Partition — P)**:
+- **C (Consistency — thực chất là Linearizability):** Mọi thao tác đọc ở bất kỳ node nào đều phải trả về giá trị ghi mới nhất (như thể chỉ có 1 bản sao duy nhất) hoặc báo lỗi — không bao giờ trả dữ liệu cũ.
+- **A (Availability):** Mọi request gửi tới một node **còn sống** đều phải nhận được phản hồi thành công (không trả lỗi timeout/503), dù node đó có thể chưa cập nhật dữ liệu mới nhất.
+- **P (Partition Tolerance):** Hệ thống vẫn tiếp tục hoạt động dù đường truyền mạng giữa các node bị đứt hoặc rớt gói tin.
 
 > [!IMPORTANT]
-> **Hiểu đúng về CAP:** Trong mạng phân tán thực tế, đứt mạng (**P**) **luôn có thể xảy ra** nên bạn **không thể bỏ P** để chọn "CA". Khi mất kết nối giữa hai cụm server, bạn chỉ được chọn:
-> - **CP:** Từ chối ghi/đọc ở nhánh bị cô lập để không trả dữ liệu sai lệch (ví dụ: hệ thống số dư ngân hàng, ZooKeeper/etcd).
-> - **AP:** Tiếp tục cho đọc/ghi ở cả hai phía dù dữ liệu có thể lệch tạm thời, rồi đồng bộ/giải quyết xung đột sau (ví dụ: giỏ hàng Amazon, DNS, feed mạng xã hội).
+> **Hiểu cho thật đúng (tránh sai lầm phỏng vấn kinh điển):**
+> Nhiều bạn học vẹt nói *"CAP là chọn 2 trong 3: CA, CP, hoặc AP"*. **Điều này SAI trong hệ phân tán!**
+> Trên mạng máy tính thực tế, đứt mạng (**P**) là sự cố vật lý **chắc chắn có lúc xảy ra** (đứt cáp quang, switch hỏng, GC pause làm mất kết nối) — bạn không thể "bỏ chọn P" để lấy "CA" (chỉ có 1 máy đơn không phân tán mới là CA!).
+>
+> **Vậy tình huống thật khi đứt mạng giữa `Node 1` và `Node 2` là gì?**
+> Giả sử cáp mạng giữa `Node 1` và `Node 2` đứt. User A vừa ghi `stock = 9` vào `Node 1`, nhưng `Node 1` không thể gửi sang `Node 2`. Ngay sau đó User B hỏi `Node 2` xem `stock` còn mấy:
+> - **Chọn CP (Ưu tiên Consistency):** `Node 2` biết mình bị mất liên lạc với `Node 1` nên **từ chối trả lời (trả lỗi)** để tuyệt đối không đưa nhầm `stock = 10` cũ! *(Ví dụ: Số dư ngân hàng, ZooKeeper, etcd, hệ thống trừ kho nghiêm ngặt).*
+> - **Chọn AP (Ưu tiên Availability):** `Node 2` **vẫn trả lời `200 OK`** với giá trị cũ `stock = 10` để user không bị gián đoạn; khi mạng nối lại mới đồng bộ và giải quyết xung đột. *(Ví dụ: Giỏ hàng Amazon, DNS, số lượt view/like, Feed mạng xã hội).*
 
-### 4.2. PACELC — Bổ sung những gì CAP thiếu
-Nhược điểm của CAP là chỉ nói về lúc **có sự cố mạng (P)**. Vậy **lúc mạng bình thường** thì sao? Mô hình **PACELC** trả lời câu hỏi đó:
-- **If P (Partition):** chọn **A** hay **C**?
-- **Else (Mạng bình thường):** chọn **L (Latency — độ trễ thấp)** hay **C (Consistency — nhất quán chặt)**?
+### 4.2. PACELC — Bổ sung cho trường hợp mạng bình thường
+CAP chỉ mô tả hành xử **lúc mạng bị đứt (P)**. Nhưng 99.9% thời gian mạng chạy bình thường thì sao? Mô hình **PACELC** bổ sung thêm nửa sau cực kỳ thực tế:
+- **P** (Nếu có **Partition**): chọn **A** (Availability) hay **C** (Consistency)?
+- **E** (**Else** — lúc mạng **bình thường không đứt**): chọn **L** (Low Latency — độ trễ thấp) hay **C** (Consistency — nhất quán chặt)?
 
-| Phân loại | Ý nghĩa | Ví dụ điển hình |
-| :--- | :--- | :--- |
-| **PA / EL** | Đứt mạng ưu tiên Available; bình thường ưu tiên Latency (replicate async) | Cassandra, DynamoDB (default), Redis Replication |
-| **PC / EC** | Đứt mạng ưu tiên Consistent; bình thường vẫn ưu tiên Consistent (chịu chậm hơn để đồng bộ quorum/sync) | PostgreSQL Sync Replication, Google Spanner, HBase |
-| **PA / EC** | Đứt mạng vẫn phục vụ, nhưng lúc bình thường vẫn chờ đồng bộ nhất quán | MongoDB (tùy cấu hình writeConcern / readConcern) |
+*Tại sao lúc bình thường lại phải chọn giữa Latency và Consistency?*
+Vì nếu Leader ở Singapore muốn đảm bảo mọi Replica ở Mỹ/Tokyo luôn nhất quán 100% (**EC**) trước khi báo `OK`, nó bắt buộc phải chờ mạng xuyên lục địa phản hồi (`+100–150 ms`!). Còn nếu muốn phản hồi tức thì trong `1 ms` (**EL**), Leader ghi xong trả `OK` ngay và gửi bất đồng bộ sang Replica sau — cực nhanh nhưng tạo độ trễ đồng bộ!
+
+| Phân loại | Lúc đứt mạng (P) | Lúc bình thường (E) | Hệ thống tiêu biểu |
+| :--- | :--- | :--- | :--- |
+| **PA / EL** | Chọn **Availability** | Chọn **Low Latency** (replicate bất đồng bộ) | DynamoDB (mặc định), Cassandra, Redis Replication |
+| **PC / EC** | Chọn **Consistency** | Chọn **Consistency** (đồng bộ quorum/sync, chịu chậm hơn) | Google Spanner, PostgreSQL Sync Replication, HBase |
+| **PA / EC** | Chọn **Availability** | Chọn **Consistency** (bình thường vẫn chờ đồng bộ) | MongoDB (khi bật writeConcern majority & readConcern majority) |
 
 ---
 
 ## 5. Ước lượng nhanh (Back-of-the-Envelope Estimation)
 
-Mục đích của ước lượng trong System Design **không phải tính chính xác từng byte**, mà là xác định **bậc độ lớn (order of magnitude)**: cần 1 server hay 100 server? Dữ liệu KB, GB hay PB? Cần sharding hay 1 DB là đủ?
+### 5.1. Tại sao cần ước lượng & Triết lý "Con số tròn"
+Trong System Design, không ai bắt bạn tính chính xác từng megabyte như làm kế toán. Mục đích của ước lượng trong 3–5 phút đầu là **xác định bậc độ lớn (Order of Magnitude)** để ra quyết định kiến trúc:
+- Hệ thống chịu `50 QPS` hay `50,000 QPS`? (1 con Postgres chịu nổi hay phải thêm Redis/Sharding?)
+- Dữ liệu 5 năm nặng `50 GB` (1 ổ SSD dư sức) hay `50 TB` / `5 PB` (bắt buộc Shard hoặc dùng Object Storage S3)?
+- Băng thông hết `10 Mbps` hay `10 Gbps` (cần CDN gấp)?
 
-### 5.1. Bảng quy đổi lũy thừa của 2 (Powers of 2)
+**Quy tắc vàng khi nhẩm:** Luôn làm tròn các con số về lũy thừa của 10 để chia nhẩm trong đầu không cần máy tính (ví dụ dùng $100,000 = 10^5$ giây thay cho $86,400$ giây/ngày — sai số ~15% hoàn toàn chấp nhận được, chỉ cần nói rõ giả định làm tròn!).
 
-| Lũy thừa | Giá trị gần đúng | Tên gọi | Viết tắt |
-| :--- | :--- | :--- | :--- |
-| $2^{10}$ | ~1 nghìn ($1,024$) | 1 Kilobyte | **1 KB** |
-| $2^{20}$ | ~1 triệu ($10^6$) | 1 Megabyte | **1 MB** |
-| $2^{30}$ | ~1 tỷ ($10^9$) | 1 Gigabyte | **1 GB** |
-| $2^{40}$ | ~1 nghìn tỷ ($10^{12}$) | 1 Terabyte | **1 TB** |
-| $2^{50}$ | ~1 triệu tỷ ($10^{15}$) | 1 Petabyte | **1 PB** |
+### 5.2. Bảng quy đổi lũy thừa của 2 (Powers of 2)
 
-### 5.2. Số liệu độ trễ kinh điển (Latency Numbers Every Programmer Should Know)
-*(Quy đổi dễ nhớ để chọn kiến trúc RAM vs SSD vs Network)*:
+| Lũy thừa | Giá trị gần đúng | Tên gọi | Viết tắt | Ví dụ thực tế |
+| :--- | :--- | :--- | :--- | :--- |
+| $2^{10}$ | ~1 nghìn ($1,024$) | 1 Kilobyte | **1 KB** | 1 bản ghi user/order JSON |
+| $2^{20}$ | ~1 triệu ($10^6$) | 1 Megabyte | **1 MB** | 1 ảnh sản phẩm chất lượng cao |
+| $2^{30}$ | ~1 tỷ ($10^9$) | 1 Gigabyte | **1 GB** | 1 bộ phim HD ngắn / 1M bản ghi user |
+| $2^{40}$ | ~1 nghìn tỷ ($10^{12}$) | 1 Terabyte | **1 TB** | Dung lượng 1 ổ cứng server vừa |
+| $2^{50}$ | ~1 triệu tỷ ($10^{15}$) | 1 Petabyte | **1 PB** | Kho video/ảnh khổng lồ của YouTube/Google Drive |
+
+### 5.3. Số liệu độ trễ kinh điển & Ý nghĩa kiến trúc
+*(Từ bài chia sẻ kinh điển của Jeff Dean — Google; giúp bạn biết cái gì nhanh, cái gì chậm)*:
 - **Đọc L1/L2 cache CPU:** `~1–4 ns`
-- **Đọc RAM (Memory reference):** `~100 ns` (cực nhanh!)
-- **Đọc 1 MB tuần tự từ RAM:** `~3–250 µs` (tùy thế hệ phần cứng; rất nhanh so với disk/network)
+- **Đọc RAM:** `~100 ns` *(cực nhanh!)*
+- **Đọc 1 MB tuần tự từ RAM:** `~3–250 µs`
 - **Đọc ngẫu nhiên SSD:** `~16–150 µs` (`~0.1 ms`)
-- **Đọc 1 MB tuần tự từ SSD:** `~1 ms` (trên NVMe hiện đại nhanh hơn nữa)
-- **Disk seek (HDD cơ học):** `~10 ms` (chậm hơn RAM hàng trăm nghìn lần!)
+- **Đọc 1 MB tuần tự từ SSD:** `~1 ms` *(trên NVMe hiện đại nhanh hơn nữa)*
+- **Disk seek (HDD cơ học):** `~10 ms` *(chậm hơn truy cập RAM tới **100,000 lần**!)*
 - **Gửi packet trong cùng Data Center (1 round-trip):** `~0.5 ms`
-- **Mạng liên lục địa (Mỹ ↔ Châu Âu / Á):** `~100–150 ms`
+- **Mạng liên lục địa (Mỹ ↔ Châu Âu / Châu Á):** `~100–150 ms`
 
-> **Bài học rút ra từ bảng độ trễ:** RAM nhanh hơn SSD ~100–1,000 lần và nhanh hơn HDD seek ~100,000 lần; mạng liên lục địa chậm gấp hàng trăm lần mạng nội bộ → **dùng Redis/Cache cho hot data**, **giảm số round-trip mạng**, và **đặt CDN gần user**.
+**3 bài học rút ra từ bảng số liệu trên:**
+1. **RAM nhanh hơn đĩa cứng hàng trăm đến hàng trăm nghìn lần** → Dữ liệu nóng phải đưa lên **Redis Cache**; thuật toán DB phải ưu tiên ghi tuần tự (**WAL / LSM-Tree**) hoặc giữ B-Tree index vừa RAM!
+2. **Tránh N+1 Network Call trong vòng lặp:** Một lời gọi mạng nội bộ mất `0.5ms`, nếu bạn viết vòng lặp gọi DB `1,000` lần cho 1 request thì riêng tiền mạng đã mất `500ms`! Hãy gộp thành 1 câu `WHERE id IN (...)` hoặc Pipeline!
+3. **Mạng liên lục địa rất chậm (`~150ms`)** → Bắt buộc đặt **CDN** cho static assets và **Multi-region** nếu phục vụ toàn cầu.
 
-### 5.3. Các con số làm tròn & công thức vàng
+### 5.4. Bộ 6 công thức vàng & Lưu ý bẫy đơn vị
 
-**Thời gian làm tròn:**
-- $1\text{ ngày} = 86,400\text{ s} \approx \mathbf{10^5\text{ s}}$ (dùng $86,400$ nếu cần hơi sát, dùng $10^5$ khi nhẩm cực nhanh!).
-- $1\text{ tháng} \approx 2.5 \times 10^6\text{ s}$; $1\text{ năm} \approx 3.15 \times 10^7\text{ s} \approx 365 \times 10^5\text{ s}$.
+**Làm tròn thời gian:**
+- $1\text{ ngày} = 86,400\text{ s} \approx \mathbf{10^5\text{ s}}$
+- $1\text{ tháng} \approx 30 \times 10^5 = \mathbf{3 \times 10^6\text{ s}}$ (chính xác `~2.59M`)
+- $1\text{ năm} \approx 365 \times 10^5 \approx \mathbf{3.15 \times 10^7\text{ s}}$
 
-**Bộ 6 công thức ước lượng chuẩn:**
+**6 công thức chuẩn:**
 1. **Average QPS:**
-   $$\text{Avg QPS} = \frac{\text{DAU} \times \text{Số request trung bình / user / ngày}}{86,400 \text{ (hoặc } 10^5\text{)}}$$
+   $$\text{Avg QPS} = \frac{\text{DAU} \times \text{Số request trung bình / user / ngày}}{10^5 \text{ (hoặc } 86,400\text{)}}$$
 2. **Peak QPS:**
    $$\text{Peak QPS} \approx \text{Avg QPS} \times (2 \text{ đến } 3)$$
-   *(Nếu có flash sale / sự kiện đột biến như 11.11 ở TechStore, hệ số peak có thể là **5x–10x**).*
+   *(Nếu đề có tính chất đột biến mạnh như Flash Sale 11.11 TechStore hoặc tin nóng Breaking News, chọn hệ số peak **5x–10x**).*
 3. **Storage:**
-   $$\text{Storage} = \text{Số bản ghi mới/ngày} \times \text{Kích thước trung bình 1 bản ghi} \times 365 \times \text{Số năm}$$
-   *(Nhân thêm hệ số replication, ví dụ $\times 3$ nếu lưu 1 primary + 2 replica).*
+   $$\text{Storage} = \text{Số bản ghi mới/ngày} \times \text{Kích thước 1 bản ghi} \times 365 \times \text{Số năm}$$
+   *(Đừng quên nhân thêm hệ số Replication $\times 3$ nếu muốn tính tổng dung lượng ổ đĩa thực tế trên cụm 1 Primary + 2 Replica!)*
 4. **Bandwidth (Băng thông):**
-   $$\text{Ingress/Egress Bandwidth} = \text{QPS} \times \text{Kích thước payload trung bình}$$
-   *(Lưu ý: $1\text{ MB/s} = 8\text{ Mbps}$).*
+   $$\text{Bandwidth (MB/s)} = \text{QPS} \times \text{Kích thước payload trung bình (MB)}$$
+   *(**Cảnh báo bẫy đơn vị:** Dung lượng file đo bằng **Byte (MB/s)**, còn tốc độ đường mạng nhà mạng/Cloud đo bằng **bit (Mbps)** → luôn nhớ **$1\text{ MB/s} = 8\text{ Mbps}$**!)*
 5. **Cache Size (Quy tắc 80/20):**
-   20% dữ liệu nóng chiếm 80% lượng đọc → chỉ cần cache lượng đọc trong ngày $\times 20\%$ (hoặc tập hot catalog/hot users).
+   Trong đa số hệ thống đọc nhiều, **20% dữ liệu nóng chiếm 80% lượng truy cập** → ước lượng RAM Cache bằng `20% × Tổng dữ liệu truy cập trong ngày` (hoặc `20% × Hot Catalog`).
 6. **Số lượng Server:**
-   $$\text{Số server tối thiểu} = \left\lceil \frac{\text{Peak QPS}}{\text{Throughput 1 instance}} \right\rceil + \text{Dự phòng HA (N+1 hoặc N+2)}$$
+   $$\text{Số server} = \left\lceil \frac{\text{Peak QPS}}{\text{Throughput 1 instance}} \right\rceil + \text{Dự phòng HA (N+1 hoặc N+2)}$$
+
+> **Mẹo kiểm tra tự nhiên:** Sau khi tính xong, luôn dừng lại tự hỏi 3 câu: *Con số Storage này 1 DB gánh nổi không? Read QPS cao gấp bao nhiêu lần Write QPS để quyết định cần Cache/Replica không? Bandwidth lớn thế có cần CDN không?* (Xem bài giải mẫu chi tiết từng bước cho **TechStore 1M user** ở [Lab 0.1](./02-thuc-hanh-techstore.md)).
 
 ---
 
 ## 6. Framework 4 bước trong System Design
 
-Đây là khung chuẩn 45 phút từ sách **Alex Xu Vol.1 (Ch.3)** để không bao giờ bị "đứng hình" hoặc lao vào vẽ chi tiết khi chưa hiểu đề.
+Đây là khung sườn chuẩn 45 phút từ sách **Alex Xu Vol.1 (Ch.3)** giúp buổi phỏng vấn có cấu trúc rõ ràng, biến bạn từ người "trả lời đề thi" thành **người đồng nghiệp đang cùng thảo luận thiết kế kiến trúc**.
 
 ```mermaid
 flowchart LR
@@ -287,9 +372,36 @@ flowchart LR
     B1 --> B2 --> B3 --> B4
 ```
 
+### Bước 1: Hiểu bài toán & Làm rõ phạm vi (3–10 phút)
+**Mục tiêu:** Tuyệt đối **không** lao vào vẽ ngay khi vừa nghe đề (*"Thiết kế YouTube"*, *"Thiết kế TechStore"*), vì đề bài System Design cố tình rất mơ hồ!
+- **Hỏi làm rõ Functional Requirements:** Tập trung vào 3–4 tính năng cốt lõi nhất trong 45 phút (vd với URL Shortener: chỉ làm *rút gọn link* và *chuyển hướng + đếm click*, bỏ qua phần quản lý team/thanh toán gói VIP nếu interviewer không yêu cầu).
+- **Hỏi làm rõ Non-Functional Requirements:** Quy mô DAU? Tỷ lệ Read:Write? Độ trễ `p99` kỳ vọng? Ưu tiên Strong Consistency (như thanh toán) hay Availability/Eventual Consistency (như News Feed)? Thời gian lưu trữ (retention)?
+- **Thực hiện Back-of-the-envelope Estimation:** Nhẩm nhanh QPS, Peak QPS, Storage 5 năm, Bandwidth để lấy căn cứ chọn công nghệ ở Bước 2 & 3.
+
+### Bước 2: Đề xuất High-Level Design & Đạt đồng thuận (10–15 phút)
+**Mục tiêu:** Dựng được "khung xương" toàn bộ hệ thống chạy thông từ đầu đến cuối và thống nhất hướng đi với interviewer trước khi đào sâu.
+- **Định nghĩa API Contract chính:** Nêu ngắn gọn method, endpoint, input/output (vd `POST /api/v1/urls`, `GET /{shortCode}`).
+- **Vẽ sơ đồ kiến trúc tổng quan & luồng dữ liệu chính:** Client → DNS/CDN → Load Balancer → App Services → Cache / DB / Message Queue. Chạy thử bằng miệng 1 luồng ghi và 1 luồng đọc xuyên qua sơ đồ.
+- **Đề xuất Data Model / Schema sơ bộ:** Nêu tên các bảng chính, kiểu DB (RDBMS vs NoSQL vs Object Storage) và lý do sơ bộ.
+- **Check-in với interviewer:** *"Khung kiến trúc tổng thể như vậy ổn chưa ạ, em xin phép đi sâu vào phần X và Y nhé?"* — giúp tránh đi lệch hướng kỳ vọng của người hỏi!
+
+### Bước 3: Design Deep Dive (10–25 phút)
+**Mục tiêu:** Đây là phần phân loại trình độ Junior vs Mid/Senior. Tập trung giải quyết **2–3 điểm khó nhất hoặc nút thắt cổ chai** của riêng bài toán đó (thay vì nói dàn trải những thứ cơ bản như login!).
+- Ví dụ theo từng bài:
+  - *URL Shortener:* Cách sinh mã không trùng (Base62 + Snowflake vs Hash), `301` vs `302`, Cache link viral.
+  - *TechStore Flash Sale:* Tồn kho chống bán âm (Atomic update / Redis Lua), chống Cache Stampede, tách gửi mail/cập nhật thống kê sang Kafka.
+  - *News Feed:* Xử lý **Celebrity Problem** bằng Hybrid Fan-out.
+- **Quy tắc vàng khi Deep Dive:** Đừng chỉ gọi tên công nghệ (*"Em dùng Kafka", "Em dùng Cassandra"*). Luôn trình bày theo mẫu: **Vấn đề → 2 Phương án (A vs B) → Chọn A vì lý do gì → Trade-off (mất gì) & Cách giảm thiểu**.
+
+### Bước 4: Wrap-up & Tổng kết (3–5 phút)
+**Mục tiêu:** Tự chủ động đánh giá lại thiết kế của chính mình thay vì đợi bị bắt lỗi.
+- **Chỉ ra Bottleneck còn sót & Cách xử lý nếu Scale tiếp 10x:** Ví dụ hiện tại DB Primary chưa shard, nếu traffic ghi tăng gấp 10 lần thì sẽ shard theo `user_id`.
+- **Xử lý lỗi (Failure Modes):** Nếu 1 server chết, 1 Datacenter mất điện, hoặc Cache sập thì hệ thống xuống cấp êm dịu (Graceful Degradation) như thế nào?
+- **Observability (Vận hành thực tế):** Theo dõi những metric nào (`p99` latency, error rate `5xx`, cache hit ratio, Kafka consumer lag, DB connection pool) và đặt cảnh báo (Alerting) ra sao.
+
 | Bước | Thời gian | Việc cần làm | Sai lầm hay mắc |
-| :--- | :--- | :--- | :--- |
-| **1. Làm rõ yêu cầu** | 3–10 phút | Đặt câu hỏi chốt: **Functional requirements** (3–4 tính năng chính), **Non-functional** (DAU, QPS, latency p99, consistency vs availability, retention). Thực hiện **ước lượng nhanh** ngay cuối bước 1. | Im lặng cắm đầu vẽ ngay; ôm đồm thiết kế mọi tính năng phụ. |
-| **2. High-Level Design** | 10–15 phút | Vẽ sơ đồ tổng thể (Client → LB/API Gateway → Services → Cache/DB/Queue). Định nghĩa **API chính** và **Data model / Schema sơ bộ**. Xác nhận với interviewer xem hướng đi ổn chưa. | Vẽ quá chi tiết thuật toán bên trong khi khung sườn chưa thống nhất. |
-| **3. Design Deep Dive** | 10–25 phút | Đi sâu vào 2–3 thành phần khó nhất hoặc nút thắt cổ chai (ví dụ: làm sao chịu peak QPS? cache stampede? sharding key? async queue?). Luôn nêu **lựa chọn A vs B và trade-off**. | Chỉ nói tên công nghệ ("dùng Kafka, dùng Redis") mà không giải thích *tại sao* và *đánh đổi gì*. |
-| **4. Wrap-up** | 3–5 phút | Nhìn lại toàn bộ sơ đồ: chỉ ra **bottleneck còn sót**, cách **monitoring / logging / alerting**, xử lý lỗi (failover), và hướng nâng cấp cho phase tiếp theo (ví dụ scale gấp 10x). | Kết thúc đột ngột khi vừa vẽ xong, không tự phản biện điểm yếu của thiết kế. |
+| :--- | :---: | :--- | :--- |
+| **1. Làm rõ yêu cầu** | 3–10p | Chốt MVP, Non-functional, ước lượng QPS/Storage | Im lặng cắm đầu vẽ ngay; ôm đồm quá nhiều tính năng phụ |
+| **2. High-Level Design** | 10–15p | API chính, Schema DB sơ bộ, Sơ đồ tổng & luồng Read/Write | Chưa thống nhất khung đã sa đà vào thuật toán chi tiết |
+| **3. Design Deep Dive** | 10–25p | Đào sâu 2–3 nút thắt khó nhất, nêu rõ **Trade-offs** | Kể tên buzzword (*Kafka, Redis*) mà không giải thích *vì sao* |
+| **4. Wrap-up** | 3–5p | Phản biện bottleneck còn lại, Failure cases, Monitoring, Scale 10x | Kết thúc cụt ngủn ngay khi vừa vẽ xong |
