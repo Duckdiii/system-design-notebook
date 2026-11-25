@@ -1,0 +1,39 @@
+# Giai đoạn 5b: AI / LLM System Design
+
+[← Quay lại Roadmap tổng](../roadmap.md)
+
+> Phần này hợp với hướng **RAG / LangChain** bạn đang làm.
+
+## 1. Thời lượng
+- **2 tuần** (Tuần 19–20), **~18 giờ** (~9 giờ/tuần).
+
+## 2. Nguồn tài liệu
+- **`[W]`** Bài hướng dẫn trả lời đề AI system design trên **KDNuggets** *(AI chatbot, hệ thống hỏi đáp tài liệu/RAG, AI coding agent, voice agent)*
+- **`[W]`** Hướng dẫn GenAI/LLM system design 2026 trên [dev.to/PracHub](http://dev.to/PracHub) *(token cost, semantic caching, streaming, guardrails, tracing)*
+- **`[W]`** Ghi chú *"System Design for AI Interviews"* của **bhaskarjha-com** *(evaluation, observability, safety boundaries, cost)*
+- **`[W]`** Tài liệu **LangChain**, vector database (**pgvector**, **Qdrant**), và phần **Evaluation** của framework bạn đang dùng
+
+## 3. Concepts
+- **Kiến trúc RAG:** chunking, embedding, vector store, hybrid search, reranking
+- **Serving LLM:** streaming, batching, semantic cache, rate limit theo token, fallback model
+- **Agent:** orchestrator, tool calling, sandbox, policy/guardrails
+- **Đánh giá:** retrieval quality, answer faithfulness, tracing, regression test cho prompt
+- **Chi phí và độ trễ:** chọn model, cache, giới hạn context
+
+## 4. Thực hành
+- [ ] Thiết kế trên giấy: *"Chatbot hỏi đáp tài liệu cho 100k người dùng"* (có sơ đồ, ước lượng chi phí token).
+- [ ] Thiết kế trên giấy: *"Hệ thống RAG hỗ trợ khách hàng"* (có sơ đồ, ước lượng chi phí token).
+- [ ] Nâng **RAG hiện có** lên mức production: thêm semantic cache, streaming, đo latency/chi phí mỗi request, bộ test đánh giá retrieval.
+
+## 5. Mục tiêu đạt được
+- [ ] Vẽ và giải thích được kiến trúc RAG trong 10 phút, có phần chi phí
+- [ ] Nêu được cách debug khi câu trả lời sai dù tài liệu đúng có tồn tại
+- [ ] Biết giữ thiết kế đơn giản trước, rồi mới thêm thành phần khi có lý do
+
+## Mốc kiểm tra liên quan
+- [ ] **Tuần 20:** Mock tổng hợp gồm 1 đề AI — Sản phẩm: *Hồ sơ portfolio và bản thiết kế RAG*
+
+---
+
+## Ghi chú & Bản thiết kế RAG
+<!-- Ghi lại ước lượng token cost, kết quả benchmark latency và retrieval evaluation tại đây -->
