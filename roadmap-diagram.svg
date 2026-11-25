@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1680" height="1255" viewBox="0 0 1680 1255">
+  <defs>
+    <filter id="cardShadow" x="-4%" y="-4%" width="108%" height="112%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
+    <marker id="arrowSlate" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#334155"/>
+    </marker>
+    <marker id="arrowOrange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#EA580C"/>
+    </marker>
+    <pattern id="dotGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#CBD5E1" opacity="0.45"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1680" height="1255" fill="#F8FAFC"/>
+  <rect width="1680" height="1255" fill="url(#dotGrid)"/>
+
+  <!-- Header Panel -->
+  <rect x="48" y="24" width="1584" height="106" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2" filter="url(#cardShadow)"/>
+  <text x="72" y="60" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="25" font-weight="800" fill="#0F172A" letter-spacing="-0.3">ROADMAP SYSTEM DESIGN CHI TIẾT (20 TUẦN · ~185 GIỜ)</text>
+  <text x="72" y="84" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#475569">Lộ trình kết hợp lý thuyết cốt lõi + thực hành TechStore (Spring Boot, PostgreSQL, Redis, Kafka) + Case Study &amp; Production RAG</text>
+
+  <!-- Legend inside header -->
+  <g transform="translate(72, 98)">
+    
+    <g>
+      <rect x="0" y="0" width="30" height="20" rx="5" fill="#EFF6FF" stroke="#BFDBFE" stroke-width="1"/>
+      <text x="15" y="13.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#1D4ED8" text-anchor="middle">[P]</text>
+    </g>
+  
+    <text x="38" y="14" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" fill="#334155">Tài liệu có sẵn trong project</text>
+
+    
+    <g>
+      <rect x="210" y="0" width="32" height="20" rx="5" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1"/>
+      <text x="226" y="13.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#6D28D9" text-anchor="middle">[W]</text>
+    </g>
+  
+    <text x="250" y="14" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" fill="#334155">Nguồn bên ngoài (Docs, Blog, Paper)</text>
+
+    <line x1="472" y1="10" x2="508" y2="10" stroke="#334155" stroke-width="2.4" marker-end="url(#arrowSlate)"/>
+    <text x="518" y="14" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" fill="#334155">Lộ trình đầy đủ (7 giai đoạn)</text>
+
+    <line x1="700" y1="10" x2="736" y2="10" stroke="#EA580C" stroke-width="2.4" stroke-dasharray="6 4" marker-end="url(#arrowOrange)"/>
+    <text x="746" y="14" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#C2410C">Fast-track khi ít thời gian (GĐ 0→1→2→4→5b, quay lại 3 &amp; 5a sau)</text>
+  </g>
+
+  <!-- Right Header KPI Badges -->
+  <g transform="translate(1152, 42)">
+    
+    <g>
+      <rect x="0" y="0" width="96" height="32" rx="8" fill="#0F172A" stroke="#0F172A" stroke-width="1"/>
+      <text x="48" y="20.375" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">20 TUẦN</text>
+    </g>
+  
+    
+    <g>
+      <rect x="106" y="0" width="106" height="32" rx="8" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1"/>
+      <text x="159" y="20.375" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#4338CA" text-anchor="middle">~185 GIỜ</text>
+    </g>
+  
+    
+    <g>
+      <rect x="222" y="0" width="114" height="32" rx="8" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1"/>
+      <text x="279" y="20.375" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0F766E" text-anchor="middle">7 GIAI ĐOẠN</text>
+    </g>
+  
+    
+    <g>
+      <rect x="346" y="0" width="114" height="32" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+      <text x="403" y="20.375" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#B45309" text-anchor="middle">5 CHECKPOINT</text>
+    </g>
+  
+  </g>
+<g filter="url(#cardShadow)"><rect x="48" y="152" width="369" height="362" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/><path d="M 62 152 H 403 Q 417 152 417 166 V 159 H 48 V 166 Q 48 152 62 152 Z" fill="#0284C7"/><rect x="48" y="157" width="369" height="4" fill="#0284C7"/>
+    <g>
+      <rect x="64" y="172" width="56" height="23" rx="6" fill="#0284C7" stroke="#0284C7" stroke-width="1"/>
+      <text x="92" y="187.7" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 0</text>
+    </g>
+  
+    <g>
+      <rect x="128" y="172" width="118" height="23" rx="6" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1"/>
+      <text x="187" y="187.525" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#0284C7" text-anchor="middle">Tuần 1–2 · ~16h</text>
+    </g>
+  
+    <g>
+      <rect x="254" y="172" width="147" height="23" rx="6" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="327.5" y="187.175" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#475569" text-anchor="middle">8h/t (5h đọc, 3h lab)</text>
+    </g>
+  <text x="64" y="216" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16.5" font-weight="700" fill="#0F172A">Nền tảng &amp; Ước lượng</text><line x1="64" y1="226" x2="401" y2="226" stroke="#E2E8F0" stroke-width="1"/><text x="64" y="243" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">NGUỒN TÀI LIỆU</text><text x="64" y="259" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[P] Xu Vol.1 ch.1–3, DDIA ch.1, Primer</text>
+<text x="64" y="274.5" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[W] ByteByteGoHq/system-design-101</text><text x="64" y="300" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">CONCEPTS CHÍNH</text><text x="64" y="316" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Vertical/Horizontal scaling, stateless</text>
+<text x="64" y="332" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Load balancer (L4/L7), reverse proxy, CDN</text>
+<text x="64" y="348" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Latency, p50/p99, SLA/SLO, CAP, PACELC</text>
+<text x="64" y="364" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Ước lượng QPS/Storage + Framework 4 bước</text><rect x="64" y="413" width="337" height="73" rx="8" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="1"/><text x="74" y="429" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#0284C7">THỰC HÀNH TECHSTORE</text><text x="74" y="445" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Tính QPS, storage 5 năm, số instance (1M user)</text>
+<text x="74" y="460" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Nginx LB trước 2–3 Spring Boot (Docker Compose)</text>
+<text x="74" y="475" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Tắt 1 instance kiểm chứng · Đo p50/p99 (k6/JMeter)</text><text x="64" y="500" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.2" font-weight="600" fill="#0F766E" text-anchor="start">✓ Mục tiêu: Đọc p99, ước lượng 5p, vẽ scale 1 → 1M user</text></g><g filter="url(#cardShadow)"><rect x="453" y="152" width="369" height="362" rx="14" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2"/><path d="M 467 152 H 808 Q 822 152 822 166 V 159 H 453 V 166 Q 453 152 467 152 Z" fill="#4F46E5"/><rect x="453" y="157" width="369" height="4" fill="#4F46E5"/>
+    <g>
+      <rect x="469" y="172" width="56" height="23" rx="6" fill="#4F46E5" stroke="#4F46E5" stroke-width="1"/>
+      <text x="497" y="187.7" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 1</text>
+    </g>
+  
+    <g>
+      <rect x="533" y="172" width="118" height="23" rx="6" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1"/>
+      <text x="592" y="187.525" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#4F46E5" text-anchor="middle">Tuần 3–6 · ~40h</text>
+    </g>
+  
+    <g>
+      <rect x="659" y="172" width="147" height="23" rx="6" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1"/>
+      <text x="732.5" y="187.175" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#4338CA" text-anchor="middle">TRỌNG TÂM · 10h/tuần</text>
+    </g>
+  <text x="469" y="216" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16.5" font-weight="700" fill="#0F172A">Data Layer (Cốt lõi nhất)</text><line x1="469" y1="226" x2="806" y2="226" stroke="#E2E8F0" stroke-width="1"/><text x="469" y="243" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">NGUỒN TÀI LIỆU</text><text x="469" y="259" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[P] DDIA ch.3, 5, 6, 7 · Primer (DB/Shard)</text>
+<text x="469" y="274.5" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[W] Spring JPA (@Version, Isolation), Postgres</text><text x="469" y="300" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">CONCEPTS CHÍNH</text><text x="469" y="316" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• T3: B-Tree vs LSM-Tree, SSTable, OLTP/OLAP</text>
+<text x="469" y="332" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• T4: Leader-follower, lag, quorum (W+R&gt;N)</text>
+<text x="469" y="348" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• T5: Sharding (range/hash), hotspot, rebalance</text>
+<text x="469" y="364" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• T6: ACID, isolation, lost update, write skew, SSI</text><rect x="469" y="413" width="337" height="73" rx="8" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="1"/><text x="479" y="429" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#4F46E5">THỰC HÀNH DATABASE</text><text x="479" y="445" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Bảng 5M dòng: so sánh index với EXPLAIN ANALYZE</text>
+<text x="479" y="460" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Postgres Primary + Replica + AbstractRoutingDS</text>
+<text x="479" y="475" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Sharding user_id · Gây &amp; sửa lost update/write skew</text><text x="469" y="500" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.2" font-weight="600" fill="#0F766E" text-anchor="start">✓ Mục tiêu: Chọn LSM/B-Tree, tái hiện lag, xử lý anomaly</text></g><g filter="url(#cardShadow)"><rect x="858" y="152" width="369" height="362" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/><path d="M 872 152 H 1213 Q 1227 152 1227 166 V 159 H 858 V 166 Q 858 152 872 152 Z" fill="#0D9488"/><rect x="858" y="157" width="369" height="4" fill="#0D9488"/>
+    <g>
+      <rect x="874" y="172" width="56" height="23" rx="6" fill="#0D9488" stroke="#0D9488" stroke-width="1"/>
+      <text x="902" y="187.7" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 2</text>
+    </g>
+  
+    <g>
+      <rect x="938" y="172" width="118" height="23" rx="6" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1"/>
+      <text x="997" y="187.525" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#0D9488" text-anchor="middle">Tuần 7–9 · ~28h</text>
+    </g>
+  
+    <g>
+      <rect x="1064" y="172" width="147" height="23" rx="6" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="1137.5" y="187.175" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#475569" text-anchor="middle">~9h/tuần</text>
+    </g>
+  <text x="874" y="216" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16.5" font-weight="700" fill="#0F172A">Building Blocks</text><line x1="874" y1="226" x2="1211" y2="226" stroke="#E2E8F0" stroke-width="1"/><text x="874" y="243" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">NGUỒN TÀI LIỆU</text><text x="874" y="259" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[P] Xu Vol.1 ch.4–7, DDIA ch.4 &amp; 11, Primer</text>
+<text x="874" y="274.5" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[W] Redis, Kafka, Spring Kafka, Resilience4j</text><text x="874" y="300" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">CONCEPTS CHÍNH</text><text x="874" y="316" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Cache patterns, TTL, stampede, penetration</text>
+<text x="874" y="332" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Rate limit (token/leaky bucket, sliding window)</text>
+<text x="874" y="348" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Consistent hashing (virtual node), Snowflake ID</text>
+<text x="874" y="364" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Queue vs Log, idempotency, DLQ, Protobuf/Avro</text><rect x="874" y="413" width="337" height="73" rx="8" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1"/><text x="884" y="429" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#0D9488">THỰC HÀNH CACHE · RL · KAFKA</text><text x="884" y="445" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Redis cache-aside (TechStore) + đo p99 trước/sau</text>
+<text x="884" y="460" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Rate limiter token bucket (Redis Lua + Spring)</text>
+<text x="884" y="475" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Kafka đặt hàng → noti (idempotent+DLT), Snowflake</text><text x="874" y="500" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.2" font-weight="600" fill="#0F766E" text-anchor="start">✓ Mục tiêu: Vẽ consistent hashing, có benchmark CV</text></g><g filter="url(#cardShadow)"><rect x="1263" y="152" width="369" height="362" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/><path d="M 1277 152 H 1618 Q 1632 152 1632 166 V 159 H 1263 V 166 Q 1263 152 1277 152 Z" fill="#7C3AED"/><rect x="1263" y="157" width="369" height="4" fill="#7C3AED"/>
+    <g>
+      <rect x="1279" y="172" width="56" height="23" rx="6" fill="#7C3AED" stroke="#7C3AED" stroke-width="1"/>
+      <text x="1307" y="187.7" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 3</text>
+    </g>
+  
+    <g>
+      <rect x="1343" y="172" width="118" height="23" rx="6" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1"/>
+      <text x="1402" y="187.525" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#7C3AED" text-anchor="middle">Tuần 10–12 · ~30h</text>
+    </g>
+  
+    <g>
+      <rect x="1469" y="172" width="147" height="23" rx="6" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="1542.5" y="187.175" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#475569" text-anchor="middle">~10h/tuần</text>
+    </g>
+  <text x="1279" y="216" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16.5" font-weight="700" fill="#0F172A">Distributed Systems</text><text x="1616" y="215" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#EA580C" text-anchor="end">(Fast-track: quay lại sau)</text><line x1="1279" y1="226" x2="1616" y2="226" stroke="#E2E8F0" stroke-width="1"/><text x="1279" y="243" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">NGUỒN TÀI LIỆU</text><text x="1279" y="259" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[P] DDIA ch.8–9 · Primer (Microservices)</text>
+<text x="1279" y="274.5" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[W] Paper Raft, MIT 6.5840 (opt), Spring Cloud</text><text x="1279" y="300" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">CONCEPTS CHÍNH</text><text x="1279" y="316" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Partial failure, clock, process pause, timeout</text>
+<text x="1279" y="332" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Linearizability, total order broadcast, 2PC, Raft</text>
+<text x="1279" y="348" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Microservices boundary, Gateway, Discovery</text>
+<text x="1279" y="364" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Saga, Outbox pattern, Retry, Circuit Breaker</text><rect x="1279" y="413" width="337" height="73" rx="8" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1"/><text x="1289" y="429" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#7C3AED">THỰC HÀNH 3 MICROSERVICES</text><text x="1289" y="445" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Tách TechStore: order, payment, inventory</text>
+<text x="1289" y="460" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Cài Saga (compensation) + Outbox pattern với Kafka</text>
+<text x="1289" y="475" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Resilience4j: tắt payment kiểm chứng chịu lỗi</text><text x="1279" y="500" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.2" font-weight="600" fill="#0F766E" text-anchor="start">✓ Mục tiêu: Phân biệt 2PC vs Saga, demo service chết</text></g><line x1="421" y1="333" x2="447" y2="333" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowSlate)"/><line x1="826" y1="333" x2="852" y2="333" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowSlate)"/><line x1="1231" y1="333" x2="1257" y2="333" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowSlate)"/>
+  <!-- Full track GĐ 3 -> GĐ 4 -->
+  <path d="M 1447.5 514 V 534 Q 1447.5 542 1439.5 542 H 248 Q 240 542 240 550 V 586"
+        fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowSlate)"/>
+  
+    <g>
+      <rect x="740" y="529" width="254" height="24" rx="12" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1"/>
+      <text x="867" y="544.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">Lộ trình chính: GĐ 3 → GĐ 4 (Tuần 13)</text>
+    </g>
+  
+
+  <!-- Fast-track GĐ 2 -> GĐ 4 (with clean hop over y=542 at x=g2Cx) -->
+  <path d="M 1042.5 514 V 535 A 7 7 0 0 1 1042.5 549 V 560 Q 1042.5 568 1034.5 568 H 348 Q 340 568 340 576 V 586"
+        fill="none" stroke="#EA580C" stroke-width="2.4" stroke-dasharray="7 4" marker-end="url(#arrowOrange)"/>
+  
+    <g>
+      <rect x="492" y="555" width="360" height="24" rx="12" fill="#FFF7ED" stroke="#FDBA74" stroke-width="1"/>
+      <text x="672" y="570.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#C2410C" text-anchor="middle">Fast-track (ít thời gian): GĐ 2 ⇢ GĐ 4 (URL Shortener, Feed, Chat)</text>
+    </g>
+  
+<g filter="url(#cardShadow)"><rect x="48" y="592" width="496" height="318" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/><path d="M 62 592 H 530 Q 544 592 544 606 V 599 H 48 V 606 Q 48 592 62 592 Z" fill="#D97706"/><rect x="48" y="597" width="496" height="4" fill="#D97706"/>
+    <g>
+      <rect x="64" y="612" width="56" height="23" rx="6" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+      <text x="92" y="627.7" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 4</text>
+    </g>
+  
+    <g>
+      <rect x="128" y="612" width="118" height="23" rx="6" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/>
+      <text x="187" y="627.525" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#D97706" text-anchor="middle">Tuần 13–16 · ~36h</text>
+    </g>
+  
+    <g>
+      <rect x="380" y="612" width="148" height="23" rx="6" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="454" y="627.175" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#475569" text-anchor="middle">2 bài/tuần · 45p/bài</text>
+    </g>
+  <text x="64" y="656" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16.5" font-weight="700" fill="#0F172A">Case Study Cơ Bản (Xu Vol.1)</text><line x1="64" y1="666" x2="528" y2="666" stroke="#E2E8F0" stroke-width="1"/><text x="64" y="683" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">NGUỒN TÀI LIỆU</text><text x="64" y="699" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[P] Xu Vol.1 ch.8–15 · Primer (Pastebin, Twitter, Crawler)</text>
+<text x="64" y="714.5" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[W] Uber/Netflix/Discord blogs, Gaurav Sen, Exponent, Hello Interview</text><text x="64" y="740" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">CONCEPTS CHÍNH</text><text x="64" y="756" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• T13: URL Shortener, Notification (base62, 301/302, queue, dedup)</text>
+<text x="64" y="772" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• T14: News Feed, Chat (fan-out write/read, celebrity, WebSocket)</text>
+<text x="64" y="788" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• T15: Search Autocomplete, Web Crawler (Trie, top-k, BFS, politeness)</text>
+<text x="64" y="804" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• T16: YouTube, Google Drive (chunking, transcoding, CDN, sync conflict)</text><rect x="64" y="824" width="464" height="58" rx="8" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1"/><text x="74" y="840" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#D97706">QUY TRÌNH 45–60P &amp; CODE MINI</text><text x="74" y="856" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Tự giải bấm giờ → nói to → so đáp án → ghi &quot;Sổ trade-off&quot;</text>
+<text x="74" y="871" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Cài 1 bài mini (URL Shortener / Notification): Spring Boot + Redis + Kafka + load test</text><text x="64" y="896" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.2" font-weight="600" fill="#0F766E" text-anchor="start">✓ Mục tiêu: Giải 8 bài (4 bước, ≥2 trade-off), 1 bản cài mini cho CV</text></g><g filter="url(#cardShadow)"><rect x="592" y="592" width="496" height="318" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/><path d="M 606 592 H 1074 Q 1088 592 1088 606 V 599 H 592 V 606 Q 592 592 606 592 Z" fill="#E11D48"/><rect x="592" y="597" width="496" height="4" fill="#E11D48"/>
+    <g>
+      <rect x="608" y="612" width="56" height="23" rx="6" fill="#E11D48" stroke="#E11D48" stroke-width="1"/>
+      <text x="636" y="627.7" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 5a</text>
+    </g>
+  
+    <g>
+      <rect x="672" y="612" width="118" height="23" rx="6" fill="#FFF1F2" stroke="#FECDD3" stroke-width="1"/>
+      <text x="731" y="627.525" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#E11D48" text-anchor="middle">Tuần 17–18 · ~18h</text>
+    </g>
+  
+    <g>
+      <rect x="924" y="612" width="148" height="23" rx="6" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="998" y="627.175" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#475569" text-anchor="middle">Đọc chọn lọc ưu tiên</text>
+    </g>
+  <text x="608" y="656" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16.5" font-weight="700" fill="#0F172A">Case Study Nâng Cao (Xu Vol.2)</text><text x="1072" y="655" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#EA580C" text-anchor="end">(Fast-track: quay lại sau)</text><line x1="608" y1="666" x2="1072" y2="666" stroke="#E2E8F0" stroke-width="1"/><text x="608" y="683" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">NGUỒN TÀI LIỆU</text><text x="608" y="699" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[W] Xu Vol.2 (tự tìm bản đọc — 13 chương, không cần đọc hết)</text>
+<text x="608" y="714.5" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[W] Tài liệu nội bộ Kafka · Stripe engineering blog (idempotency)</text><text x="608" y="740" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">CONCEPTS CHÍNH</text><text x="608" y="756" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Ưu tiên #1 — Payment System: idempotency key, đối soát, retry an toàn</text>
+<text x="608" y="772" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Ưu tiên #2 — Distributed Message Queue: partition, replication, ack</text>
+<text x="608" y="788" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Ưu tiên #3 — Proximity Service: geohash, quadtree (nếu còn thời gian)</text>
+<text x="608" y="804" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Bỏ qua Stock Exchange nếu không nhắm fintech (nặng &amp; khó)</text><rect x="608" y="824" width="464" height="58" rx="8" fill="#FFF1F2" stroke="#FECDD3" stroke-width="1"/><text x="618" y="840" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#E11D48">THỰC HÀNH TECHSTORE PAYMENT</text><text x="618" y="856" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Thiết kế lại luồng thanh toán TechStore chuẩn Payment System:</text>
+<text x="618" y="871" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">  idempotency key, state machine, xử lý callback trùng, đối soát</text><text x="608" y="896" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.2" font-weight="600" fill="#0F766E" text-anchor="start">✓ Mục tiêu: Nắm vững payment idempotency, Kafka internals, geohash</text></g><g filter="url(#cardShadow)"><rect x="1136" y="592" width="496" height="318" rx="14" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/><path d="M 1150 592 H 1618 Q 1632 592 1632 606 V 599 H 1136 V 606 Q 1136 592 1150 592 Z" fill="#059669"/><rect x="1136" y="597" width="496" height="4" fill="#059669"/>
+    <g>
+      <rect x="1152" y="612" width="56" height="23" rx="6" fill="#059669" stroke="#059669" stroke-width="1"/>
+      <text x="1180" y="627.7" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 5b</text>
+    </g>
+  
+    <g>
+      <rect x="1216" y="612" width="118" height="23" rx="6" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1"/>
+      <text x="1275" y="627.525" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#059669" text-anchor="middle">Tuần 19–20 · ~18h</text>
+    </g>
+  
+    <g>
+      <rect x="1468" y="612" width="148" height="23" rx="6" fill="#F1F5F9" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="1542" y="627.175" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#475569" text-anchor="middle">Hợp hướng RAG/LangChain</text>
+    </g>
+  <text x="1152" y="656" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="16.5" font-weight="700" fill="#0F172A">AI / LLM System Design</text><line x1="1152" y1="666" x2="1616" y2="666" stroke="#E2E8F0" stroke-width="1"/><text x="1152" y="683" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">NGUỒN TÀI LIỆU</text><text x="1152" y="699" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[W] KDNuggets (AI SD), dev.to/PracHub (2026), bhaskarjha-com</text>
+<text x="1152" y="714.5" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#334155" text-anchor="start">[W] LangChain docs, Vector DB (pgvector, Qdrant), Evaluation docs</text><text x="1152" y="740" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#64748B" letter-spacing="0.4">CONCEPTS CHÍNH</text><text x="1152" y="756" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• RAG: chunking, embedding, vector store, hybrid search, reranking</text>
+<text x="1152" y="772" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Serving: streaming, batching, semantic cache, token rate limit, fallback</text>
+<text x="1152" y="788" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Agent: orchestrator, tool calling, sandbox, policy/guardrails</text>
+<text x="1152" y="804" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1E293B" text-anchor="start">• Eval &amp; Cost: retrieval quality, faithfulness, tracing, prompt regression</text><rect x="1152" y="824" width="464" height="58" rx="8" fill="#ECFDF5" stroke="#A7F3D0" stroke-width="1"/><text x="1162" y="840" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#059669">THỰC HÀNH PRODUCTION RAG &amp; THIẾT KẾ</text><text x="1162" y="856" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Thiết kế trên giấy: Doc Chatbot 100k user &amp; RAG CSKH (+ ước lượng token cost)</text>
+<text x="1162" y="871" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.3" font-weight="500" fill="#1E293B" text-anchor="start">• Nâng RAG hiện có lên production: semantic cache, streaming, latency/cost, eval</text><text x="1152" y="896" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.2" font-weight="600" fill="#0F766E" text-anchor="start">✓ Mục tiêu: Vẽ &amp; tính cost RAG trong 10p, debug khi RAG trả lời sai</text></g><line x1="548" y1="751" x2="586" y2="751" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowSlate)"/><line x1="1092" y1="751" x2="1130" y2="751" stroke="#334155" stroke-width="2.5" marker-end="url(#arrowSlate)"/>
+  <path d="M 296 910 V 928 Q 296 936 304 936 H 1376 Q 1384 936 1384 928 V 916"
+        fill="none" stroke="#EA580C" stroke-width="2.4" stroke-dasharray="7 4" marker-end="url(#arrowOrange)"/>
+  
+    <g>
+      <rect x="645" y="924" width="390" height="24" rx="12" fill="#FFF7ED" stroke="#FDBA74" stroke-width="1"/>
+      <text x="840" y="939.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#C2410C" text-anchor="middle">Fast-track: GĐ 4 ⇢ GĐ 5b (AI/LLM) · sau đó quay lại GĐ 3 &amp; GĐ 5a</text>
+    </g>
+  
+
+  <text x="48" y="982" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="14" font-weight="800" fill="#0F172A" letter-spacing="0.4">MỐC KIỂM TRA TỔNG &amp; SẢN PHẨM ĐẦU RA (CHECKPOINTS)</text>
+  <line x1="48" y1="994" x2="1632" y2="994" stroke="#CBD5E1" stroke-width="3"/>
+
+    <circle cx="196.5" cy="994" r="7" fill="#4F46E5" stroke="#FFFFFF" stroke-width="2.5"/>
+    <g filter="url(#cardShadow)">
+      <rect x="48" y="1004" width="297" height="112" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+      <rect x="48" y="1004" width="6" height="112" rx="3" fill="#4F46E5"/>
+      
+    <g>
+      <rect x="64" y="1016" width="74" height="22" rx="6" fill="#4F46E5" stroke="#4F46E5" stroke-width="1"/>
+      <text x="101" y="1030.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">TUẦN 4</text>
+    </g>
+  
+      <text x="64" y="1058" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0F172A">Mock 45p: Đề dạng DB / Scale</text>
+      <rect x="64" y="1070" width="269" height="32" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="72" y="1090" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#334155">📦 Repo Replica + Sharding demo</text>
+    </g>
+  
+    <circle cx="518.25" cy="994" r="7" fill="#0D9488" stroke="#FFFFFF" stroke-width="2.5"/>
+    <g filter="url(#cardShadow)">
+      <rect x="369.75" y="1004" width="297" height="112" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+      <rect x="369.75" y="1004" width="6" height="112" rx="3" fill="#0D9488"/>
+      
+    <g>
+      <rect x="385.75" y="1016" width="74" height="22" rx="6" fill="#0D9488" stroke="#0D9488" stroke-width="1"/>
+      <text x="422.75" y="1030.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">TUẦN 8</text>
+    </g>
+  
+      <text x="385.75" y="1058" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0F172A">Mock 45p: Cache / Queue</text>
+      <rect x="385.75" y="1070" width="269" height="32" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="393.75" y="1090" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#334155">📦 Repo Cache + Rate Limiter + Kafka</text>
+    </g>
+  
+    <circle cx="840" cy="994" r="7" fill="#7C3AED" stroke="#FFFFFF" stroke-width="2.5"/>
+    <g filter="url(#cardShadow)">
+      <rect x="691.5" y="1004" width="297" height="112" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+      <rect x="691.5" y="1004" width="6" height="112" rx="3" fill="#7C3AED"/>
+      
+    <g>
+      <rect x="707.5" y="1016" width="74" height="22" rx="6" fill="#7C3AED" stroke="#7C3AED" stroke-width="1"/>
+      <text x="744.5" y="1030.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">TUẦN 12</text>
+    </g>
+  
+      <text x="707.5" y="1058" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0F172A">Giải thích Saga &amp; Circuit Breaker</text>
+      <rect x="707.5" y="1070" width="269" height="32" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="715.5" y="1090" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#334155">📦 Demo 3 Microservice chịu lỗi</text>
+    </g>
+  
+    <circle cx="1161.75" cy="994" r="7" fill="#D97706" stroke="#FFFFFF" stroke-width="2.5"/>
+    <g filter="url(#cardShadow)">
+      <rect x="1013.25" y="1004" width="297" height="112" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+      <rect x="1013.25" y="1004" width="6" height="112" rx="3" fill="#D97706"/>
+      
+    <g>
+      <rect x="1029.25" y="1016" width="74" height="22" rx="6" fill="#D97706" stroke="#D97706" stroke-width="1"/>
+      <text x="1066.25" y="1030.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">TUẦN 16</text>
+    </g>
+  
+      <text x="1029.25" y="1058" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0F172A">Mock 45p: Đề mới hoàn toàn</text>
+      <rect x="1029.25" y="1070" width="269" height="32" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="1037.25" y="1090" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#334155">📦 Sổ Trade-off 8 bài + 1 Mini App</text>
+    </g>
+  
+    <circle cx="1483.5" cy="994" r="7" fill="#059669" stroke="#FFFFFF" stroke-width="2.5"/>
+    <g filter="url(#cardShadow)">
+      <rect x="1335" y="1004" width="297" height="112" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+      <rect x="1335" y="1004" width="6" height="112" rx="3" fill="#059669"/>
+      
+    <g>
+      <rect x="1351" y="1016" width="74" height="22" rx="6" fill="#059669" stroke="#059669" stroke-width="1"/>
+      <text x="1388" y="1030.85" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">TUẦN 20</text>
+    </g>
+  
+      <text x="1351" y="1058" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12.5" font-weight="700" fill="#0F172A">Mock tổng hợp + 1 đề AI/LLM</text>
+      <rect x="1351" y="1070" width="269" height="32" rx="6" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
+      <text x="1359" y="1090" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="11.5" font-weight="600" fill="#334155">📦 Portfolio + Bản thiết kế RAG</text>
+    </g>
+  
+  <g filter="url(#cardShadow)">
+    <rect x="48" y="1136" width="1584" height="96" rx="12" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
+    <text x="72" y="1160" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="13" font-weight="800" fill="#0F172A">PHÂN BỔ THỜI LƯỢNG (~185 GIỜ / 20 TUẦN)</text>
+    <text x="1608" y="1160" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="600" fill="#475569" text-anchor="end">Trọng số lớn nhất: GĐ 1 Data Layer (40h) &amp; GĐ 4 Case Study (36h)</text>
+<path d="M 80 1174 H 204 V 1210 H 80 Q 72 1210 72 1202 V 1182 Q 72 1174 80 1174 Z" fill="#0284C7"/><text x="138" y="1196" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 0 · ~16h</text><rect x="204" y="1174" width="330" height="36" fill="#4F46E5" stroke="#FFFFFF" stroke-width="1"/><text x="369" y="1196" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 1 · ~40h</text><rect x="534" y="1174" width="231" height="36" fill="#0D9488" stroke="#FFFFFF" stroke-width="1"/><text x="649.5" y="1196" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 2 · ~28h</text><rect x="765" y="1174" width="248" height="36" fill="#7C3AED" stroke="#FFFFFF" stroke-width="1"/><text x="889" y="1196" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 3 · ~30h</text><rect x="1013" y="1174" width="297" height="36" fill="#D97706" stroke="#FFFFFF" stroke-width="1"/><text x="1161.5" y="1196" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 4 · ~36h</text><rect x="1310" y="1174" width="149" height="36" fill="#E11D48" stroke="#FFFFFF" stroke-width="1"/><text x="1384.5" y="1196" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 5a · ~18h</text><path d="M 1459 1174 H 1600 Q 1608 1174 1608 1182 V 1202 Q 1608 1210 1600 1210 H 1459 Z" fill="#059669"/><text x="1533.5" y="1196" font-family="Segoe UI, Inter, Arial, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">GĐ 5b · ~18h</text>
+  </g>
+</svg>
