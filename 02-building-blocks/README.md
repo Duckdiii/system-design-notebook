@@ -11,13 +11,25 @@
 - **`[P]`** `system-design-primer`: *Cache*, *Asynchronism*, *Message queue*, *Back pressure*, *Idempotent operations*
 - **`[W]`** Tài liệu **Redis** (data types, eviction), **Kafka** (partition, consumer group, offset), **Spring Kafka**, **Resilience4j RateLimiter**
 
-## 3. Concepts
-- **Cache:** cache-aside, read-through, write-through, write-behind, TTL, eviction (LRU/LFU), cache stampede, cache penetration, invalidation
-- **Rate limiting:** token bucket, leaky bucket, sliding window
-- **Consistent hashing:** virtual node
-- **ID sinh phân tán:** UUID, Snowflake, ticket server
-- **Queue vs log:** RabbitMQ vs Kafka, at-least-once / at-most-once / exactly-once, idempotency, dead-letter queue
-- **Serialization:** JSON, Protobuf, Avro, schema evolution
+---
+
+## Tài liệu bài học chi tiết trong Giai đoạn 2
+
+| Phần | Nội dung | File bài học |
+| :---: | :--- | :--- |
+| **3** | **Concepts:** Cache patterns & 3 vấn đề kinh điển, Rate Limiting (Token/Leaky/Sliding Window + Lua), Consistent Hashing & Virtual Nodes, Snowflake ID, Queue vs Log (RabbitMQ vs Kafka), Idempotency, DLQ, Serialization & Schema Evolution | [01-concepts.md](./01-concepts.md) |
+| **4** | **Thực hành (4 Labs TechStore):** Docker Compose (Postgres+Redis+Kafka KRaft), Redis Cache-Aside + Mutex Stampede + đo `p99`, Rate Limiter Redis Lua Spring Filter, Kafka Order→Notification (Idempotent + `@RetryableTopic` + DLT), Snowflake ID Java | [02-thuc-hanh-techstore.md](./02-thuc-hanh-techstore.md) |
+| **5** | **Mục tiêu & Mốc Tuần 8:** Vẽ Consistent Hashing, 3 vấn đề Cache, giải thích Idempotent Consumer, mẫu Benchmark đưa vào CV & chuẩn bị Mock Tuần 8 | [03-muc-tieu-va-check-tuan8.md](./03-muc-tieu-va-check-tuan8.md) |
+
+---
+
+## 3. Concepts (Tóm tắt checklist)
+- [ ] **Cache:** cache-aside, read-through, write-through, write-behind, TTL, eviction (LRU/LFU), cache stampede, cache penetration, invalidation
+- [ ] **Rate limiting:** token bucket, leaky bucket, sliding window
+- [ ] **Consistent hashing:** virtual node
+- [ ] **ID sinh phân tán:** UUID, Snowflake, ticket server
+- [ ] **Queue vs log:** RabbitMQ vs Kafka, at-least-once/at-most-once/exactly-once, idempotency, dead-letter queue
+- [ ] **Serialization:** JSON, Protobuf, Avro, schema evolution
 
 ## 4. Thực hành
 - [ ] Thêm **Redis cache-aside** cho API sản phẩm của TechStore. Đo `p99` trước/sau, tạo và xử lý **cache stampede** (lock hoặc TTL ngẫu nhiên).
@@ -36,5 +48,5 @@
 
 ---
 
-## Ghi chú & Kết quả thực hành
-<!-- Ghi lại benchmark p99 trước/sau cache, Lua script rate limiter và kiến trúc Kafka tại đây -->
+## Ghi chú & Kết quả thực hành cá nhân
+<!-- Ghi lại benchmark p99 trước/sau cache, kết quả test rate limiter và Kafka DLT tại đây -->
