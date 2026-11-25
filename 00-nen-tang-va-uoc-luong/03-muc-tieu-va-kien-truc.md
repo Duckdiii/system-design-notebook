@@ -160,6 +160,6 @@ flowchart TB
 
 ## Checklist hoàn thành Giai đoạn 0
 
-- [ ] Đọc xong [01-concepts.md](./01-concepts.md) và tự vẽ lại được sự khác nhau giữa L4 vs L7, CAP vs PACELC.
+- [ ] Đọc xong toàn bộ 6 bài học trong [concepts/](./concepts/README.md) và tự vẽ lại được sự khác nhau giữa L4 vs L7, CAP vs PACELC.
 - [ ] Hoàn thành đủ 3 bài thực hành trong [02-thuc-hanh-techstore.md](./02-thuc-hanh-techstore.md) và điền số liệu đo `p50`/`p99` vào bảng.
 - [ ] Tự kiểm tra đạt đủ 4 mục tiêu ở trên (đặc biệt: tự nhẩm bài toán mới trong 5 phút và giải thích được sơ đồ Scale 1 → 1M user không cần nhìn tài liệu).

@@ -1,6 +1,6 @@
 # Bài học Giai đoạn 0 — Phần 4: Thực Hành TechStore (1M Users · Nginx LB · k6)
 
-[← Phần 3: Concepts](./01-concepts.md) · [Quay lại GĐ 0 README](./README.md) · [Tiếp theo: Phần 5 — Mục tiêu & Kiến trúc →](./03-muc-tieu-va-kien-truc.md)
+[← Phần 3: Concepts](./concepts/README.md) · [Quay lại GĐ 0 README](./README.md) · [Tiếp theo: Phần 5 — Mục tiêu & Kiến trúc →](./03-muc-tieu-va-kien-truc.md)
 
 ---
 
