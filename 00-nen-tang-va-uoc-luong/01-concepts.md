@@ -20,7 +20,11 @@
 
 ### 1.1. Vertical Scaling (Scale Up) vs Horizontal Scaling (Scale Out)
 
-![Minh họa Vertical Scaling vs Horizontal Scaling](./images/vertical-vs-horizontal-scaling.png)
+![Vertical Scaling vs Horizontal Scaling](./images/vertical-vs-horizontal-scaling.png)
+*Nguồn: [karanpratapsingh/system-design](https://github.com/karanpratapsingh/system-design) (CC BY-NC-ND 4.0)*
+
+![8 Chiến lược Scalability](./images/scalability-strategies.png)
+*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
 
 #### Tại sao phải Scale?
 Khi mới ra mắt (ví dụ **TechStore** phục vụ vài trăm khách/ngày), toàn bộ hệ thống có thể chạy gọn trên **1 server duy nhất** (`2 vCPU, 4 GB RAM`), xử lý ổn định khoảng `150–200 QPS`. Nhưng khi lượng người dùng tăng gấp 10–20 lần hoặc vào giờ cao điểm Flash Sale, các tài nguyên vật lý lần lượt chạm ngưỡng:
@@ -109,6 +113,9 @@ Một server **Stateless** **không giữ bất kỳ trạng thái riêng nào t
    - Khi login, Server ký số một chuỗi **JWT (JSON Web Token)** chứa `{ userId, role, exp }` rồi trả cho Client. Các request sau Client tự đính kèm JWT vào Header `Authorization: Bearer ...` → Server nào cũng tự kiểm tra chữ ký và biết ngay user là ai mà không cần hỏi Redis!
    - *Lưu ý trade-off của JWT:* Rất nhẹ và nhanh vì không cần DB lookup, nhưng **khó thu hồi (revoke) ngay lập tức** trước khi token hết hạn (ví dụ khi user bấm "Đăng xuất khỏi mọi thiết bị" hoặc bị khóa tài khoản → thực tế hay dùng JWT ngắn hạn `15 phút` + Refresh Token lưu trong Redis/DB!).
 
+![JWT 101: Stateless Authentication](./images/jwt-stateless-auth.png)
+*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
+
 ```mermaid
 flowchart LR
     subgraph Stateful["Stateful (Khó scale ngang)"]
@@ -134,13 +141,11 @@ flowchart LR
 
 Nhiều người mới hay nhầm lẫn 3 khái niệm này vì đều đứng "trung gian" trên đường truyền mạng. Cách nhớ đơn giản nhất là hỏi: **"Nó đứng về phe ai?"**
 
-```mermaid
-flowchart LR
-    C["Clients / Browsers"] --> FP["Forward Proxy (Đứng trước Client)"]
-    FP -- "Internet" --> RP["Reverse Proxy / Load Balancer (Đứng trước Servers)"]
-    RP --> B1["Backend 1"]
-    RP --> B2["Backend 2"]
-```
+![Forward Proxy vs Reverse Proxy](./images/forward-vs-reverse-proxy.png)
+*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
+
+![Reverse Proxy vs API Gateway vs Load Balancer](./images/reverse-proxy-gateway-lb.png)
+*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
 
 1. **Forward Proxy (Đứng phía Client):**
    - Đại diện cho **Client** đi gọi ra các server bên ngoài Internet. Server đích chỉ thấy IP của Proxy chứ không thấy IP thật của từng máy nhân viên/người dùng.
@@ -172,6 +177,9 @@ Theo mô hình mạng OSI 7 tầng, L4 hoạt động ở tầng **Transport (TC
 
 ### 2.3. Các thuật toán Load Balancing & Health Checks
 
+![Các thuật toán Load Balancing](./images/load-balancing-algorithms.png)
+*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
+
 1. **Round Robin (Xoay vòng):** Chia đều lần lượt `1 → 2 → 3 → 1`. *Hạn chế:* Giả định mọi server mạnh ngang nhau và mọi request tốn thời gian xử lý như nhau.
 2. **Weighted Round Robin:** Gán trọng số theo sức mạnh máy (vd máy 16 vCPU nhận `weight=4`, máy 4 vCPU nhận `weight=1`), hoặc dùng cho **Canary Release** (95% traffic vào bản cũ, 5% vào bản mới).
 3. **Least Connections (Ít kết nối nhất):** Gửi request mới tới server đang xử lý ít kết nối mở nhất. *Tại sao cần?* Nếu 1 API xuất báo cáo Excel tốn `10 giây` còn API xem sản phẩm tốn `10 ms`, Round Robin có thể vô tình dồn hết các request `10 giây` vào đúng 1 máy làm máy đó treo, trong khi Least Connections tự tránh máy đang bận!
@@ -188,6 +196,9 @@ Theo mô hình mạng OSI 7 tầng, L4 hoạt động ở tầng **Transport (TC
 Dù server Spring Boot đặt ở Singapore xử lý một ảnh mất chỉ `1 ms`, nhưng **tốc độ ánh sáng trong cáp quang là hữu hạn**. Một người dùng ở Mỹ hoặc Châu Âu tải 20 bức ảnh sản phẩm và file JS `3 MB` từ Singapore sẽ phải chịu độ trễ mạng (`RTT ~180–250 ms` nhân với số lần handshake TCP + TLS + tải dữ liệu) mất tới **3–5 giây**!
 
 **CDN** là mạng lưới hàng trăm máy chủ đặt khắp thế giới (**Edge Servers / Edge PoPs** — ví dụ Cloudflare, CloudFront, Akamai) lưu bản sao các tài nguyên gần người dùng nhất về mặt địa lý (kéo RTT từ `200ms` xuống chỉ còn `10–20ms`!).
+
+![What is CDN](./images/what-is-cdn.png)
+*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
 
 #### Push CDN vs Pull CDN
 
@@ -263,6 +274,9 @@ Dù server Spring Boot đặt ở Singapore xử lý một ảnh mất chỉ `1 
 ## 4. CAP & PACELC (Mức khái niệm)
 
 ### 4.1. Định lý CAP (Phá vỡ hiểu lầm "Chọn 2 trong 3")
+
+![CAP Theorem](./images/cap-theorem.jpeg)
+*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
 Định lý CAP nói về **một hệ thống dữ liệu phân tán** (nhiều node lưu cùng dữ liệu qua mạng) khi xảy ra **chia tách mạng (Network Partition — P)**:
 - **C (Consistency — thực chất là Linearizability):** Mọi thao tác đọc ở bất kỳ node nào đều phải trả về giá trị ghi mới nhất (như thể chỉ có 1 bản sao duy nhất) hoặc báo lỗi — không bao giờ trả dữ liệu cũ.
 - **A (Availability):** Mọi request gửi tới một node **còn sống** đều phải nhận được phản hồi thành công (không trả lỗi timeout/503), dù node đó có thể chưa cập nhật dữ liệu mới nhất.
@@ -279,6 +293,9 @@ Dù server Spring Boot đặt ở Singapore xử lý một ảnh mất chỉ `1 
 > - **Chọn AP (Ưu tiên Availability):** `Node 2` **vẫn trả lời `200 OK`** với giá trị cũ `stock = 10` để user không bị gián đoạn; khi mạng nối lại mới đồng bộ và giải quyết xung đột. *(Ví dụ: Giỏ hàng Amazon, DNS, số lượt view/like, Feed mạng xã hội).*
 
 ### 4.2. PACELC — Bổ sung cho trường hợp mạng bình thường
+
+![PACELC Theorem](./images/pacelc-theorem.png)
+*Nguồn: [karanpratapsingh/system-design](https://github.com/karanpratapsingh/system-design) (CC BY-NC-ND 4.0)*
 CAP chỉ mô tả hành xử **lúc mạng bị đứt (P)**. Nhưng 99.9% thời gian mạng chạy bình thường thì sao? Mô hình **PACELC** bổ sung thêm nửa sau cực kỳ thực tế:
 - **P** (Nếu có **Partition**): chọn **A** (Availability) hay **C** (Consistency)?
 - **E** (**Else** — lúc mạng **bình thường không đứt**): chọn **L** (Low Latency — độ trễ thấp) hay **C** (Consistency — nhất quán chặt)?
@@ -316,6 +333,9 @@ Trong System Design, không ai bắt bạn tính chính xác từng megabyte nh�
 
 ### 5.3. Số liệu độ trễ kinh điển & Ý nghĩa kiến trúc
 *(Từ bài chia sẻ kinh điển của Jeff Dean — Google; giúp bạn biết cái gì nhanh, cái gì chậm)*:
+
+![Latency Numbers You Should Know](./images/latency-numbers.jpg)
+*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
 - **Đọc L1/L2 cache CPU:** `~1–4 ns`
 - **Đọc RAM:** `~100 ns` *(cực nhanh!)*
 - **Đọc 1 MB tuần tự từ RAM:** `~3–250 µs`

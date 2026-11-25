@@ -81,6 +81,9 @@
 
 *(Tổng hợp theo tiến trình từ **Alex Xu Vol.1 — Ch.1**, áp dụng trực tiếp vào bài toán web/e-commerce như **TechStore**).*
 
+![How to Scale a Website Step-by-Step](./images/scale-step-by-step.jpg)
+*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
+
 ### Giai đoạn tiến hóa A → B → C (Từ 1 Server đến Multi-Instance + DB Replication)
 
 ```mermaid
