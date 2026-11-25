@@ -1,6 +1,6 @@
 # Bài 6: Framework 4 Bước Trong System Design (Alex Xu Ch.3)
 
-[← Bài 5: Ước lượng nhanh](./05-uoc-luong-nhanh.md) · [Mục lục Concepts](./README.md) · [Tiếp theo: Phần 4 — Thực hành TechStore →](../02-thuc-hanh-techstore.md)
+[← Bài 5: Ước lượng nhanh](./05-uoc-luong-nhanh.md) · [Mục lục Concepts](./README.md) · [Bài 7: JWT & Bảo mật →](./07-jwt-stateless-auth.md)
 
 ---
 

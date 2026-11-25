@@ -17,13 +17,14 @@
 
 | Phần | Nội dung | File bài học |
 | :---: | :--- | :--- |
-| **3** | **Concepts (6 bài riêng trong `concepts/`):** | [concepts/README.md](./concepts/README.md) |
+| **3** | **Concepts (7 bài riêng trong `concepts/`):** | [concepts/README.md](./concepts/README.md) |
 | 3.1 | Vertical vs Horizontal Scaling & Stateless vs Stateful | [concepts/01-scaling-va-stateless.md](./concepts/01-scaling-va-stateless.md) |
 | 3.2 | Load Balancer (L4/L7), Reverse Proxy & CDN | [concepts/02-load-balancer-proxy-cdn.md](./concepts/02-load-balancer-proxy-cdn.md) |
 | 3.3 | Latency, Throughput, Percentile (`p50`/`p99`), SLA/SLO & "Số 9" | [concepts/03-latency-throughput-sla.md](./concepts/03-latency-throughput-sla.md) |
 | 3.4 | Định lý CAP & Mô hình PACELC | [concepts/04-cap-va-pacelc.md](./concepts/04-cap-va-pacelc.md) |
 | 3.5 | Ước lượng nhanh (Back-of-the-Envelope Estimation) | [concepts/05-uoc-luong-nhanh.md](./concepts/05-uoc-luong-nhanh.md) |
 | 3.6 | Framework 4 bước trong System Design | [concepts/06-framework-4-buoc.md](./concepts/06-framework-4-buoc.md) |
+| 3.7 | JWT (JSON Web Token): Cơ chế ký số, Trade-offs & Bảo mật | [concepts/07-jwt-stateless-auth.md](./concepts/07-jwt-stateless-auth.md) |
 | **4** | **Thực hành:** Ước lượng TechStore 1M user, Nginx LB + 3 Spring Boot (Docker Compose + failover), Đo `p50`/`p99` bằng k6/JMeter | [02-thuc-hanh-techstore.md](./02-thuc-hanh-techstore.md) |
 | **5** | **Mục tiêu đạt được:** Giải thích `p99`, Playbook ước lượng 5 phút (+ bài tập), Cheatsheet 4 bước & Bản vẽ Scale 1 → 1M user | [03-muc-tieu-va-kien-truc.md](./03-muc-tieu-va-kien-truc.md) |
 

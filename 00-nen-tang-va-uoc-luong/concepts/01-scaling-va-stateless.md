@@ -97,10 +97,8 @@ Một server **Stateless** **không giữ bất kỳ trạng thái riêng nào t
    - Dữ liệu giao dịch lâu dài → lưu vào **PostgreSQL**.
 2. **Đẩy State về phía Client (Stateless Token — JWT):**
    - Khi login, Server ký số một chuỗi **JWT (JSON Web Token)** chứa `{ userId, role, exp }` rồi trả cho Client. Các request sau Client tự đính kèm JWT vào Header `Authorization: Bearer ...` → Server nào cũng tự kiểm tra chữ ký và biết ngay user là ai mà không cần hỏi Redis!
-   - *Lưu ý trade-off của JWT:* Rất nhẹ và nhanh vì không cần DB lookup, nhưng **khó thu hồi (revoke) ngay lập tức** trước khi token hết hạn (ví dụ khi user bấm "Đăng xuất khỏi mọi thiết bị" hoặc bị khóa tài khoản → thực tế hay dùng JWT ngắn hạn `15 phút` + Refresh Token lưu trong Redis/DB!).
-
-![JWT 101: Stateless Authentication](../images/jwt-stateless-auth.png)
-*Nguồn: [ByteByteGoHq/system-design-101](https://github.com/ByteByteGoHq/system-design-101) (CC BY-NC-ND 4.0)*
+   - *Lưu ý trade-off của JWT:* Rất nhẹ và nhanh vì không cần DB lookup, nhưng **khó thu hồi (revoke) ngay lập tức** trước khi token hết hạn → thực tế hay dùng **Access Token JWT ngắn hạn (15 phút) + Refresh Token lưu trong Redis/DB**.
+   - 👉 **Xem bài giải thích chuyên sâu cách ký `HS256` / `RS256` / `ES256`, vì sao Public Key không làm lộ dữ liệu & bẫy bảo mật tại:** [Bài 7: JWT — Cơ chế ký số, Trade-offs & Bảo mật](./07-jwt-stateless-auth.md).
 
 ```mermaid
 flowchart LR
