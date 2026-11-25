@@ -11,6 +11,18 @@
 - **`[W]`** Engineering blog (danh sách ở cuối sách Xu): Uber, Netflix, Discord, Shopify…
 - **`[W]`** Playlist System Design của **Gaurav Sen**, và mock interview miễn phí trên **Exponent** hoặc **Hello Interview**
 
+---
+
+## Tài liệu bài học chi tiết trong Giai đoạn 4
+
+| Phần | Nội dung | File bài học |
+| :---: | :--- | :--- |
+| **3** | **Concepts 8 Case Studies (Tuần 13–16):** Sơ đồ kiến trúc, Deep Dive, Trade-offs & Bottleneck cho *URL Shortener, Notification, News Feed, Chat, Search Autocomplete, Web Crawler, YouTube, Google Drive* | [01-concepts-8-case-studies.md](./01-concepts-8-case-studies.md) |
+| **4** | **Thực hành & Bản cài Mini:** Quy trình luyện 45–60p, Sổ Trade-off 8 bài và code mẫu bản mini **URL Shortener + Async Analytics** (Spring Boot + PostgreSQL + Redis + Kafka + `k6`) | [02-thuc-hanh-va-so-tradeoff.md](./02-thuc-hanh-va-so-tradeoff.md) |
+| **5** | **Mục tiêu & Mốc Tuần 16:** Bảng tổng hợp Bottleneck/Trade-off 8 bài, 10 câu hỏi vàng Bước 1, mẫu viết CV & 3 đề mới tự Mock Tuần 16 | [03-muc-tieu-va-check-tuan16.md](./03-muc-tieu-va-check-tuan16.md) |
+
+---
+
 ## 3. Concepts theo từng bài
 
 | Tuần | Bài | Ý chính | Hoàn thành |
@@ -40,4 +52,4 @@
 ---
 
 ## Sổ Trade-off (Ghi chú nhanh)
-<!-- Mẫu: | Bài | Quyết định (Chọn A thay B) | Lý do | Đánh đổi / Điểm nghẽn | -->
+<!-- Xem mẫu bảng đầy đủ tại 02-thuc-hanh-va-so-tradeoff.md -->
