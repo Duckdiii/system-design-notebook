@@ -13,12 +13,24 @@
 - **`[W]`** Ghi chú *"System Design for AI Interviews"* của **bhaskarjha-com** *(evaluation, observability, safety boundaries, cost)*
 - **`[W]`** Tài liệu **LangChain**, vector database (**pgvector**, **Qdrant**), và phần **Evaluation** của framework bạn đang dùng
 
-## 3. Concepts
-- **Kiến trúc RAG:** chunking, embedding, vector store, hybrid search, reranking
-- **Serving LLM:** streaming, batching, semantic cache, rate limit theo token, fallback model
-- **Agent:** orchestrator, tool calling, sandbox, policy/guardrails
-- **Đánh giá:** retrieval quality, answer faithfulness, tracing, regression test cho prompt
-- **Chi phí và độ trễ:** chọn model, cache, giới hạn context
+---
+
+## Tài liệu bài học chi tiết trong Giai đoạn 5b
+
+| Phần | Nội dung | File bài học |
+| :---: | :--- | :--- |
+| **3** | **Concepts:** Kiến trúc RAG (Chunking, Hybrid Search, Reranking), Serving LLM (Streaming, Batching, Semantic Cache, Token Rate Limit, Fallback), AI Agent & Guardrails, Evaluation (`Recall@K`, `Faithfulness`, Regression Test), Tối ưu Chi phí & Độ trễ | [01-concepts.md](./01-concepts.md) |
+| **4** | **Thực hành:** 2 bản thiết kế trên giấy kèm ước lượng Token Cost (*Chatbot tài liệu 100k users* & *RAG CSKH TechStore*) + code mẫu nâng cấp RAG lên Production (Semantic Cache, SSE Streaming & Metrics, `Recall@K`/`MRR` Evaluator) | [02-thuc-hanh-rag-production.md](./02-thuc-hanh-rag-production.md) |
+| **5** | **Mục tiêu & Mốc Tuần 20:** Kịch bản thuyết trình RAG + Chi phí 10 phút, Playbook 5 tầng Debug khi RAG trả lời sai, Tư duy KISS & Checklist Portfolio tổng kết 20 tuần | [03-muc-tieu-va-check-tuan20.md](./03-muc-tieu-va-check-tuan20.md) |
+
+---
+
+## 3. Concepts (Tóm tắt checklist)
+- [ ] **Kiến trúc RAG:** chunking, embedding, vector store, hybrid search, reranking
+- [ ] **Serving LLM:** streaming, batching, semantic cache, rate limit theo token, fallback model
+- [ ] **Agent:** orchestrator, tool calling, sandbox, policy/guardrails
+- [ ] **Đánh giá:** retrieval quality, answer faithfulness, tracing, regression test cho prompt
+- [ ] **Chi phí và độ trễ:** chọn model, cache, giới hạn context
 
 ## 4. Thực hành
 - [ ] Thiết kế trên giấy: *"Chatbot hỏi đáp tài liệu cho 100k người dùng"* (có sơ đồ, ước lượng chi phí token).
@@ -36,4 +48,4 @@
 ---
 
 ## Ghi chú & Bản thiết kế RAG
-<!-- Ghi lại ước lượng token cost, kết quả benchmark latency và retrieval evaluation tại đây -->
+<!-- Ghi lại ước lượng token cost, kết quả benchmark TTFT/cost và Recall@5 sau nâng cấp tại đây -->
